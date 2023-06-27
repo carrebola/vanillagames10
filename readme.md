@@ -1,2 +1,2 @@
 # Vanilla Games
-Esta es la rama principal de nuestro proyecto. 
+Vanilla Games es el nombre que recibe el proyecto que vamos a desarrollar en esta documentación. Es un proyecto sencillo, en las versiones iniciales, que se irá complicando a medida que vayamos trabajando en él.
