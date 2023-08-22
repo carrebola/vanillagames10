@@ -7,7 +7,9 @@ export default {
   resolve: {
     alias: {
       '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
-      '~bootswatch': path.resolve(__dirname, 'node_modules/bootswatch')
+      '~bootswatch': path.resolve(__dirname, 'node_modules/bootswatch'),
+      '~icons': path.resolve(__dirname, 'node_modules/bootstrap-icons')
+
     }
   },
   build: {
