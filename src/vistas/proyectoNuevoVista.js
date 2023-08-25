@@ -84,7 +84,7 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, sunt? Recu
 </div>
   `,
   script: () => {
-    console.log('vista proyecto nuevo cargada')
+    console.log('vista proyectoNuevo nuevo cargada')
     // Validación bootstrap
 
     // Capturamos el formulario en una variable

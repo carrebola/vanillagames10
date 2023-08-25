@@ -126,5 +126,8 @@ export default {
   </div>
 </div>
 
-  `
+  `,
+  script: () => {
+    console.log('Vista admin cargada')
+  }
 }

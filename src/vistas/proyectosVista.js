@@ -345,5 +345,8 @@ export default {
     </div>
   </div>
 </div>
-  `
+  `,
+  script: () => {
+    console.log('Vista proyectos cargada')
+  }
 }

@@ -9,5 +9,8 @@ export default {
     <img src="/assets/images/logo.svg" alt="fpllefia" class="img-fluid" />
   </div>
 </div>
-  `
+  `,
+  script: () => {
+    console.log('Vista home cargada')
+  }
 }
