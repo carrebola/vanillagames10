@@ -5,7 +5,7 @@ export default {
   <h1 class="mt-5 text-center">Inicia sesión</h1>
   <div class="m-5 mx-auto" style="max-width: 400px">
     <!-- Formulario de inicio de sesión (login) -->
-    <form novalidate action="" class="form border shadow-sm p-3">
+    <form id="formulario" novalidate action="" class="form border shadow-sm p-3">
       <!-- Email -->
       <label for="email" class="form-label">Email:</label>
       <input required type="email" class="form-control" />
@@ -47,5 +47,23 @@ export default {
     >
   </div>
 </div>
-  `
+  `,
+  script: () => {
+    console.log('vista proyecto nuevo cargada')
+    // Validación bootstrap
+
+    // Capturamos el formulario en una variable
+    const formulario = document.querySelector('#formulario')
+    // Detectamos su evento submit (enviar)
+    formulario.addEventListener('submit', (event) => {
+    // Comprobamos si el formulario no valida
+      if (!formulario.checkValidity()) {
+      // Detenemos el evento enviar (submit)
+        event.preventDefault()
+        event.stopPropagation()
+      }
+      // Y añadimos la clase 'was-validate' para que se muestren los mensajes
+      formulario.classList.add('was-validated')
+    })
+  }
 }

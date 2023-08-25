@@ -16,7 +16,7 @@ export default {
     </div>
     <div class="col-12 col-md-8">
       <!-- Formulario nuevo proyecto -->
-      <form action="" class="form">
+      <form id="formulario" action="" class="form" novalidate>
         <!-- Nombre proyecto -->
         <label class="form-label" for="nombre"><strong>Nombre: </strong></label>
         <input
@@ -82,5 +82,23 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, sunt? Recu
     </div>
   </div>
 </div>
-  `
+  `,
+  script: () => {
+    console.log('vista proyecto nuevo cargada')
+    // Validación bootstrap
+
+    // Capturamos el formulario en una variable
+    const formulario = document.querySelector('#formulario')
+    // Detectamos su evento submit (enviar)
+    formulario.addEventListener('submit', (event) => {
+    // Comprobamos si el formulario no valida
+      if (!formulario.checkValidity()) {
+      // Detenemos el evento enviar (submit)
+        event.preventDefault()
+        event.stopPropagation()
+      }
+      // Y añadimos la clase 'was-validate' para que se muestren los mensajes
+      formulario.classList.add('was-validated')
+    })
+  }
 }

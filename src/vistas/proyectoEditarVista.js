@@ -9,7 +9,7 @@ export default {
       Volver</bottom
     >
   </div>
-  <form novalidate action="" class="">
+  <form novalidate id="formulario" action="" class="">
     <div class="row mt-2">
       <div class="col-12 col-md-4 pt-2 mb-3">
         <img src="/assets/images/juego.jpg" alt="" class="img-fluid" />
@@ -106,5 +106,23 @@ export default {
     </div>
   </form>
 </div>
-  `
+  `,
+  script: () => {
+    console.log('vista proyecto nuevo cargada')
+    // Validación bootstrap
+
+    // Capturamos el formulario en una variable
+    const formulario = document.querySelector('#formulario')
+    // Detectamos su evento submit (enviar)
+    formulario.addEventListener('submit', (event) => {
+    // Comprobamos si el formulario no valida
+      if (!formulario.checkValidity()) {
+      // Detenemos el evento enviar (submit)
+        event.preventDefault()
+        event.stopPropagation()
+      }
+      // Y añadimos la clase 'was-validate' para que se muestren los mensajes
+      formulario.classList.add('was-validated')
+    })
+  }
 }
