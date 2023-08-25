@@ -108,7 +108,7 @@ export default {
 </div>
   `,
   script: () => {
-    console.log('vista proyecto nuevo cargada')
+    console.log('vista proyectoDetalleEditar cargada')
     // Validación bootstrap
 
     // Capturamos el formulario en una variable
