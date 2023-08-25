@@ -1,7 +1,7 @@
 import { header } from './componentes/header'
 import { footer } from './componentes/footer'
 
-import './scss/styles.scss' 
+import './scss/styles.scss'
 
 // Importamos la vista por defecto (que será home)
 async function cargarVista () {
