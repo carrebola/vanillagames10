@@ -39,7 +39,7 @@ export const enrutador = {
         // Si se produce un error cargamos la vista 404
         console.log(error)
       }
-    } else{
+    } else {
       window.location = '#/404'
     }
   },
@@ -50,7 +50,8 @@ export const enrutador = {
       // Evitamos que se cargue la página
 
       const link = event.target
-      if (link.tagName === 'A') {
+      if (link.classList.contains('router-link')) {
+        console.log('router-link');
         event.preventDefault()
         // Obtenemos la ruta del enlace sin el .html
         const href = link.getAttribute('href')

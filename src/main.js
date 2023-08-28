@@ -6,6 +6,7 @@ import './scss/styles.scss'
 
 // Inyectamos el componente header
 document.querySelector('header').innerHTML = header.template
+header.script()
 
 // Inyectamos el componente footer
 document.querySelector('footer').innerHTML = footer.template
