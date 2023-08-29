@@ -60,10 +60,10 @@ const menuUsuario = {
         <img src="/assets/images/avatar.svg" alt="" width="25" />
       </a>
       <ul class="dropdown-menu me-0" style="left: -100px; width: 100px">
-        <li class="text-light text-end p-2 small">
+        <li id="emailUserMenu" class="text-light text-end p-2 small">
           ${ls.getUsuario().email}
         </li>
-        <li class="text-light text-end pe-2 small fst-italic">
+        <li id="rolUserMenu" class="text-light text-end pe-2 small fst-italic">
           ${ls.getUsuario().rol}
         </li>
         <li><hr class="dropdown-divider" /></li>
@@ -77,7 +77,7 @@ const menuUsuario = {
           </a>
         </li>
         <li><hr class="dropdown-divider" /></li>
-        <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+        <li><a class="dropdown-item cerrarSesion" href="#">Cerrar sesión</a></li>
       </ul>
     </li>
   </ul>
@@ -96,11 +96,11 @@ const menuUsuario = {
         <img src="/assets/images/avatar.svg" alt="" width="25" />
       </a>
       <ul class="dropdown-menu me-0" style="left: -100px; width: 100px">
-        <li class="text-light text-center p-2">
-          <p>${ls.getUsuario().email}</p>
+        <li id="emailUserMenu" class="text-light text-center p-2">
+          ${ls.getUsuario().email}
         </li>
-        <li class="text-light text-center p-2">
-          <p>${ls.getUsuario().rol}</p>
+        <li id="rolUserMenu" class="text-light text-center p-2">
+          ${ls.getUsuario().rol}
         </li>
         <li><hr class="dropdown-divider" /></li>
         <li>
@@ -113,7 +113,7 @@ const menuUsuario = {
           </a>
         </li>
         <li><hr class="dropdown-divider" /></li>
-        <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+        <li><a class="dropdown-item cerrarSesion" href="#">Cerrar sesión</a></li>
       </ul>
     </li>
   </ul>
@@ -133,11 +133,11 @@ const menuUsuario = {
         <img src="/assets/images/avatar.svg" alt="" width="25" />
       </a>
       <ul class="dropdown-menu me-0" style="left: -100px; width: 100px">
-        <li class="text-light text-center p-2">
-          <p>${ls.getUsuario().email}</p>
+        <li id="emailUserMenu" class="text-light text-center p-2">
+          ${ls.getUsuario().email}
         </li>
-        <li class="text-light text-center p-2">
-          <p>${ls.getUsuario().rol}</p>
+        <li id="rolUserMenu" class="text-light text-center p-2">
+          ${ls.getUsuario().rol}
         </li>
         <li><hr class="dropdown-divider" /></li>
         <li>
@@ -150,7 +150,7 @@ const menuUsuario = {
           </a>
         </li>
         <li><hr class="dropdown-divider" /></li>
-        <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+        <li><a class="dropdown-item cerrarSesion" href="#">Cerrar sesión</a></li>
       </ul>
     </li>
   </ul>

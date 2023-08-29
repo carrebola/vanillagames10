@@ -1,3 +1,7 @@
+import { perfiles } from '../bd/datosPrueba'
+import { ls } from '../componentes/funciones'
+import { header } from '../componentes/header'
+
 export default {
   template: // html
   `
@@ -8,11 +12,11 @@ export default {
     <form id="formulario" novalidate action="" class="form border shadow-sm p-3">
       <!-- Email -->
       <label for="email" class="form-label">Email:</label>
-      <input required type="email" class="form-control" />
+      <input id="email" name="email" value="ejemplo@email.com" required type="email" class="form-control" />
       <div class="invalid-feedback">El formato del email no es correcto</div>
       <!-- Contraseña -->
       <label for="pass" class="form-label mt-3">Contraseña:</label>
-      <input required minlength="6" id="pass" type="password" class="form-control" />
+      <input id="password" name="password" required minlength="6" type="password" class="form-control" />
       <div class="invalid-feedback">
         La contraseña debe tener como mínimo 6 caracteres
       </div>
@@ -56,14 +60,41 @@ export default {
     const formulario = document.querySelector('#formulario')
     // Detectamos su evento submit (enviar)
     formulario.addEventListener('submit', (event) => {
-    // Comprobamos si el formulario no valida
-      if (!formulario.checkValidity()) {
       // Detenemos el evento enviar (submit)
-        event.preventDefault()
-        event.stopPropagation()
+      event.preventDefault()
+      event.stopPropagation()
+      // Comprobamos si el formulario no valida
+      if (!formulario.checkValidity()) {
+        console.log('No valida')
+      } else {
+        enviarDatos(formulario)
       }
       // Y añadimos la clase 'was-validate' para que se muestren los mensajes
       formulario.classList.add('was-validated')
     })
+
+    function enviarDatos (formulario) {
+      const email = formulario.email.value
+      const pass = formulario.password.value
+
+      // buscamos el indice del email en el array perfiles
+      const indexUser = perfiles.findIndex((user) => user.email === email) // 1
+
+      if (perfiles[indexUser].contraseña === pass) {
+        console.log('¡login correcto!')
+        const usuario = {
+          email: perfiles[indexUser].email,
+          rol: perfiles[indexUser].rol
+        }
+        // Guardamos datos de usaurio en localstorage
+        ls.setUsuario(usuario)
+        // Cargamos página home
+        window.location = '#/proyectos'
+        // Actualizamos el header para que se muestren los menús que corresponden al rol
+        header.script()
+      } else {
+        console.log('El usuario no existe o la contraseña no corresponde')
+      }
+    }
   }
 }

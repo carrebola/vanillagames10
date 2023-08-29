@@ -48,10 +48,9 @@ export const enrutador = {
   observadorRutas: () => {
     document.body.addEventListener('click', event => {
       // Evitamos que se cargue la página
-
       const link = event.target
       if (link.classList.contains('router-link')) {
-        console.log('router-link');
+        console.log('router-link')
         event.preventDefault()
         // Obtenemos la ruta del enlace sin el .html
         const href = link.getAttribute('href')
