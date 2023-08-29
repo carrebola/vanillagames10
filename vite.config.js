@@ -8,7 +8,8 @@ export default {
     alias: {
       '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
       '~bootswatch': path.resolve(__dirname, 'node_modules/bootswatch'),
-      '~icons': path.resolve(__dirname, 'node_modules/bootstrap-icons')
+      '~icons': path.resolve(__dirname, 'node_modules/bootstrap-icons'),
+      '~@popperjs': path.resolve(__dirname, 'node_modules/popperjs')
 
     }
   },

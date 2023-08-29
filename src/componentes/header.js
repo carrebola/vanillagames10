@@ -1,6 +1,7 @@
 // importamos la función ls del archivo funciones
 import { ls } from '../componentes/funciones'
 import { menuRol, menuUsuario } from './menus'
+import { editarPerfil } from './editarPerfil'
 
 export const header = {
   template: // html
@@ -40,19 +41,6 @@ export const header = {
         <li class="nav-item">
           <a class="nav-link router-link" aria-current="page" href="#" class="router-link">A cerca de</a>
         </li>
-
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
       </ul>
 
       <div id="menuRol"></div>
@@ -60,38 +48,40 @@ export const header = {
     </div>
   </div>
 </nav>
+<div id="modal"></div>
 
   `,
   script: () => {
     console.log('Header cargado')
-    // Simulamos el inicio de sesión de un usuario
-    // Simulamos registro usuario
-    ls.setUsuario({ email: 'pepe@gmial.com', rol: 'anonimo' })
 
+    document.querySelector('#modal').innerHTML = editarPerfil.template
+    // Simulamos el inicio de sesión de un usuario
+    ls.setUsuario({ email: 'chafardera@gmial.com', rol: 'registrado' })
     const rolUsuario = ls.getUsuario().rol
-    console.log(rolUsuario)
 
     switch (rolUsuario) {
-      case 'anónimo':
-
-        break
       case 'registrado':
+        // menú rol
+        document.querySelector('#menuRol').innerHTML = menuRol.templateRegistrado
         // menú usuario
         document.querySelector('#menuUsuario').innerHTML = menuUsuario.templateRegistrado
         break
       case 'desarrollador':
+        // menú rol
+        document.querySelector('#menuRol').innerHTML = menuRol.templateDesarrollador
         // menú usuario
         document.querySelector('#menuUsuario').innerHTML = menuUsuario.templateDesarrollador
-
-        document.querySelector('#menuRol').innerHTML = menuRol.templateDesarrollador
-
         break
       case 'admin':
+        // menú rol
+        document.querySelector('#menuRol').innerHTML = menuRol.templateAdmin
         // menú usuario
         document.querySelector('#menuUsuario').innerHTML = menuUsuario.templateAdmin
         break
-      default :
+      default : // Para usuarios anónimos
+        // menú rol
         document.querySelector('#menuRol').innerHTML = menuRol.templateAnonimo
+        // menú usuario: No tiene
         break
     }
   }
