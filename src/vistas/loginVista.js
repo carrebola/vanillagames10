@@ -84,7 +84,9 @@ export default {
         console.log('¡login correcto!')
         const usuario = {
           email: perfiles[indexUser].email,
-          rol: perfiles[indexUser].rol
+          rol: perfiles[indexUser].rol,
+          avatar: perfiles[indexUser].avatar,
+          user_id: perfiles[indexUser].user_id
         }
         // Guardamos datos de usaurio en localstorage
         ls.setUsuario(usuario)
