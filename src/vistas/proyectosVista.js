@@ -1,4 +1,6 @@
 import { proyectos } from '../bd/datosPrueba'
+import { ls } from '../componentes/funciones'
+
 export default {
   template: // html
   `
@@ -6,14 +8,23 @@ export default {
   <h1 class="mt-5">Proyectos</h1>
   <div class="row mt-5">
     <div class="col-12">
+      <!--nav-tabs-->
       <ul class="nav nav-tabs">
+        <!--Etiqueta Todos los proyectos-->
         <li class="nav-item w-50">
-          <a class="nav-link active" aria-current="page" href="#"
-            >Todos los proyectos</a
+          <button 
+            class="selectorFicha fichaProyectos nav-link w-100 active"
           >
+            Todos los proyectos
+          </button>
         </li>
+        <!--Etiqueta Mis proyectos-->
         <li class="nav-item w-50">
-          <a class="nav-link" href="#">Mis proyectos</a>
+          <button 
+            class="selectorFicha fichaMisProyectos nav-link w-100"
+          >
+            Mis proyectos
+          </button>
         </li>
       </ul>
     </div>
@@ -21,13 +32,16 @@ export default {
   <div class="border border-top-0 p-3">
     <div class="row">
       <div class="col-12 col-sm-4 mb-3">
+      <!-- Boton para subir proyectos -->
         <a href="#/proyectoNuevo" class="btn btn-primary w-100">Subir proyecto</a>
       </div>
       <div class="d-flex col-12 col-sm-8 mb-3">
+        <!-- Botones para alternar entre vista de tabla o de tarjetas -->
         <button class="btn btn-secondary me-2 bi bi-grid-3x3-gap vistaTabla">
         </button>
         <button class="btn btn-secondary me-2 bi bi-list vistaTarjetas">
         </button>
+        <!-- Buscador -->
         <div class="input-group flex-nowrap">
           <span class="input-group-text" id="addon-wrapping"
             ><i class="bi bi-search"></i
@@ -46,8 +60,9 @@ export default {
         </div>
       </div>
     </div>
-    <!-- tabla -->
-    <div id="tabTabla" class="col-12 d-none d-xl-block" style="overflow-x: auto">
+    
+    <!-- Tabla de proyectos -->
+    <div class="col-12 d-none d-xl-block" style="overflow-x: auto">
       <table
         class="table table-hover align-middle mt-3"
         style="min-width: 1000px"
@@ -83,7 +98,8 @@ export default {
         </tbody>
       </table>
     </div>
-    <!-- tarjetas -->
+
+    <!-- Panel de tarjetas -->
     <div id="tabTarjetas" class="d-xl-none row">
       ...
     </div>
@@ -92,90 +108,165 @@ export default {
   `,
   script: () => {
     console.log('Vista proyectos cargada')
+    // Capturamos los datos del usuario logueado
+    const usuario = ls.getUsuario()
 
-    let tbodyProyectos = ''
-    // Para cada proyecto del array 'proyectos'
-    proyectos.forEach(proyecto => {
-      // sumamos un tr con los datos del proyecto
-      tbodyProyectos += `
-      <tr>
-        <td>
-          <div class="containerImagen">
-            <img 
-              width="200px" 
-              src=${proyecto.imagen || '/assets/images/imagenVacia.png'} 
-              alt="imagen proyecto" />
-          </div>
-        </td>
-        <td>${proyecto.nombre}</td>
-        <td>${proyecto.descripcion}</td>
-        <td><a href="${proyecto.enlace}"><i class="bi bi-link fs-4"></i></a></td>
-        <td><a href="${proyecto.repositorio}"><i class="bi bi-folder-symlink fs-4"></i></a></td>
-        <td>${proyecto.nombre_usuario} ${proyecto.apellidos_usuario}</td>
-        <td>${proyecto.created_at}</td>
-        <td>${proyecto.estado}</td>
-      </tr>
-            
-      `
+    // **** AQUI DEBEMOS CAPTURAR LOS PROYECTOS DE LA BASE DE DATOS ****
+
+    // Capturamos proyectos y guardamos en variable para poder ser filtrada
+    let proyectosFiltrados = proyectos
+
+    // Definimos que por defecto se muestran 'mis proyectos'
+    let misProyectos = false
+    // Detectamos si se cambia de proyectos a mis proyectos al hacer click en las pestañas
+    document.querySelector('.nav-tabs').addEventListener('click', (event) => {
+      if (event.target.classList.contains('fichaMisProyectos')) {
+        // Si click en mis proyectos cambiamos pestaña activa
+        document.querySelector('.fichaMisProyectos').classList.add('active')
+        document.querySelector('.fichaProyectos').classList.remove('active')
+        misProyectos = true
+      } else {
+        // Si click en todos los proyectos cambiamos pestaña activa
+        document.querySelector('.fichaProyectos').classList.add('active')
+        document.querySelector('.fichaMisProyectos').classList.remove('active')
+        misProyectos = false
+      }
+      // Actualizamos los datos en el panel central
+      pintaTabla(proyectosFiltrados)
+      pintaTarjetas(proyectosFiltrados)
     })
-    // inyectamos el resultado en el tbody
-    document.querySelector('#tbodyProyectos').innerHTML = tbodyProyectos
 
-    let tarjetasProyectos = ''
-    // Para cada proyecto del array 'proyectos'
-    proyectos.forEach(proyecto => {
-      // sumamos un tr con los datos del proyecto
-      tarjetasProyectos += // html
-      `
-      <!-- tarjeta  -->
-      <div class="col-12 col-lg-6">
-        <div class="card mb-3">
-          <div class="row g-0">
-            <div
-              class="col-4"
-              style="
-                background-image: url(${proyecto.imagen || '/assets/images/imagenVacia.png'});
-                background-position: center;
-                background-size: cover;
-              "
-            ></div>
-            <div class="col-8">
-              <div class="card-body">
-                <h5 class="card-title">${proyecto.nombre}</h5>
-                <p class="card-text">
-                  ${proyecto.descripcion}
-                </p>
-                <p class="small m-0 text-end text-italic">Autor: ${proyecto.nombre_usuario} ${proyecto.apellidos_usuario}</p>
-                <p class="small text-end text-italic">Fecha: ${proyecto.created_at}</p>
+    // *** FUNCIÓN PARA PINTAR TABLA A PARTIR DE ARRAY datos ***
+    const pintaTabla = (datos) => {
+      // Si tenemos seleccionada la opción 'mis proyectos' filtramos los proyectos por user_id
+      if (misProyectos) {
+        proyectosFiltrados = datos.filter((proyecto) => proyecto.user_id === usuario.user_id)
+        console.log(proyectos)
+      } else {
+        proyectosFiltrados = datos
+      }
 
-                <a class="btn btn-sm btn-outline-primary" href="${proyecto.enlace}"><i class="bi bi-link"></i></a>
-                <a class="btn btn-sm btn-outline-primary" href="${proyecto.repositorio}"><i class="bi bi-folder-symlink"></i></a>
-                <a class="btn btn-sm btn-success" href="#">${proyecto.estado}</a>
-                <a
-                  data-user_id = ${proyecto.user_id}
-                  class="d-none d-sm-inline btn btn-sm btn-outline-primary bi bi-pencil"
-                ></a>
-                <a
-                  data-user_id = ${proyecto.user_id}
-                  class="d-none d-sm-inline btn btn-sm btn-outline-danger bi bi-trash3"
-                ></a>
+      let tbodyProyectos = ''
+      // Para cada proyecto del array 'proyectos'
+      proyectosFiltrados.forEach(proyecto => {
+        // Generamos botones dependiendo de si el proyecto ha sido creado por el usuario logueado
+        let botones = ''
+        if (usuario.user_id === proyecto.user_id) {
+          botones = `
+                <td><a
+                  data-id = ${proyecto.id}
+                  class="botonAdmin botonEditar d-none d-sm-inline btn btn-sm btn-outline-primary bi bi-pencil"
+                ></a></td>
+                <td><a
+                  data-id = ${proyecto.id}
+                  class="botonAdmin botonBorrar d-none d-sm-inline btn btn-sm btn-outline-danger bi bi-trash3"
+                ></a></td>
+                `
+        }
+        // sumamos un tr con los datos del proyecto de la iteración
+        tbodyProyectos += // html
+        `
+        <tr>
+          <td>
+            <div class="containerImagen">
+              <img 
+                width="200px" 
+                src=${proyecto.imagen || '/assets/images/imagenVacia.png'} 
+                alt="imagen proyecto" />
+            </div>
+          </td>
+          <td>${proyecto.nombre}</td>
+          <td>${proyecto.descripcion}</td>
+          <td><a href="${proyecto.enlace}" target="_blank"><i class="bi bi-link fs-4"></i></a></td>
+          <td><a href="${proyecto.repositorio}" target="_blank"><i class="bi bi-folder-symlink fs-4"></i></a></td>
+          <td>${proyecto.nombre_usuario} ${proyecto.apellidos_usuario}</td>
+          <td>${proyecto.created_at}</td>
+          <td>${proyecto.estado}</td>
+          <td>
+            <!-- Botones de edición y borrado -->
+            ${botones}
+          </td>
+        </tr>   
+        `
+      })
+      // inyectamos el resultado en el tbody
+      document.querySelector('#tbodyProyectos').innerHTML = tbodyProyectos
+    }
+
+    // Función para pintar tarjetas
+    const pintaTarjetas = (datos) => {
+      // Si tenemos seleccionada la opción 'mis proyectos' filtramos los proyectos por user_id
+      if (misProyectos) {
+        proyectosFiltrados = datos.filter((proyecto) => proyecto.user_id === usuario.user_id)
+        console.log(proyectos)
+      } else {
+        proyectosFiltrados = datos
+      }
+      let tarjetasProyectos = ''
+      // Para cada proyecto del array 'proyectosFiltrados'
+      proyectosFiltrados.forEach(proyecto => {
+        // Generamos botones dependiendo de si el proyecto ha sido creado por el usuario logueado
+        let botones = ''
+        if (usuario.user_id === proyecto.user_id) {
+          botones = `
+                  <a
+                    data-id = ${proyecto.id}
+                    class="botonAdmin botonEditar d-none d-sm-inline btn btn-sm btn-outline-primary bi bi-pencil"
+                  ></a>
+                  <a
+                    data-id = ${proyecto.id}
+                    class="botonAdmin botonBorrar d-none d-sm-inline btn btn-sm btn-outline-danger bi bi-trash3"
+                  ></a>
+                  `
+        }
+        // sumamos un tr con los datos del proyecto
+        tarjetasProyectos += // html
+        `
+        <!-- tarjeta  -->
+        <div class="col-12 col-lg-6">
+          <div class="card mb-3">
+            <div class="row g-0">
+              <div
+                class="col-4"
+                style="
+                  background-image: url(${proyecto.imagen || '/assets/images/imagenVacia.png'});
+                  background-position: center;
+                  background-size: cover;
+                "
+              ></div>
+              <div class="col-8">
+                <div class="card-body">
+                  <h5 class="card-title">${proyecto.nombre}</h5>
+                  <p class="card-text">
+                    ${proyecto.descripcion}
+                  </p>
+                  <p class="small m-0 text-end text-italic">Autor: ${proyecto.nombre_usuario} ${proyecto.apellidos_usuario}</p>
+                  <p class="small text-end text-italic">Fecha: ${proyecto.created_at}</p>
+                  <a class="btn btn-sm btn-outline-primary" href="${proyecto.enlace}" target="_blank"><i class="bi bi-link"></i></a>
+                  <a class="btn btn-sm btn-outline-primary" href="${proyecto.repositorio}" target="_blank"><i class="bi bi-folder-symlink"></i></a>
+                  <button class="btn btn-sm btn-success">${proyecto.estado}</button>
+                  <!-- Botones editar y borrar -->
+                  ${botones}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>  
-      `
-    })
-    // inyectamos el resultado en tbody
-    document.querySelector('#tabTarjetas').innerHTML = tarjetasProyectos
+        </div>  
+        `
+      })
+      // inyectamos el resultado en tbody
+      document.querySelector('#tabTarjetas').innerHTML = tarjetasProyectos
+    }
+    // Pintamos los datos en tabla y tarjetas
+    pintaTabla(proyectosFiltrados)
+    pintaTarjetas(proyectosFiltrados)
 
-    // Cambio entre vista de tablas y vista de tarjetas
-
-    // Lineas originales del html para los tabs:
-    // <div id="tabTabla" class="col-12 d-none d-xl-block" style="overflow-x: auto">
-    // <div id="tabTarjetas" class="d-xl-none row">
+    // *** SELECCIÓN DE VISTA EN FORMATO TABLA O TARJETAS ***
+    // Selección vista tabla
     document.querySelector('.vistaTabla').addEventListener('click', (boton) => {
-      console.log('vistaTabla')
+      // Lineas originales del html para los tabs:
+      // <div class="col-12 d-none d-xl-block" style="overflow-x: auto">
+      // <div class="d-xl-none row">
       // Pinta el boton de verde
       boton.target.classList.add('btn-success')
       // Pinta el otro botón de gris y elimina el verde
@@ -188,6 +279,7 @@ export default {
       document.querySelector('#tabTarjetas').setAttribute('class', 'd-none')
     })
 
+    // Selección vista tarjetas
     document.querySelector('.vistaTarjetas').addEventListener('click', (boton) => {
       console.log('vistaTarjetas')
       // Pinta el boton de verde
@@ -202,24 +294,20 @@ export default {
       document.querySelector('#tabTarjetas').setAttribute('class', 'row')
     })
 
-    // Filtro para buscador
-
-    // Obtén una referencia al input de búsqueda
+    // *** FILTRO PARA BUSCADOR ***
+    // Capturamos el input de búsqueda
     const inputBusqueda = document.getElementById('inputBusqueda')
-
-    // Agrega un evento de escucha para el evento de entrada en el input de búsqueda
+    // Agregamos un evento de escucha para el evento de entrada en el input de búsqueda
     inputBusqueda.addEventListener('input', () => {
-      // Obtén el texto de búsqueda del input, conviértelo a minúsculas y elimina espacios en blanco al principio y al final
+      // Capturamos el texto de búsqueda del input, conviértelo a minúsculas y elimina espacios en blanco al principio y al final
       const textoBusqueda = inputBusqueda.value.toLowerCase().trim()
-
-      // Filtra los proyectos que coinciden con el texto de búsqueda en cualquier campo
+      // Filtramos los proyectos que coinciden con el texto de búsqueda en cualquier campo
       const proyectosFiltrados = proyectos.filter(proyecto => {
         // Itera sobre las propiedades (campos) de cada proyecto
         for (const key in proyecto) {
-          // Obtén el valor del campo actual
+          // Obtenemos el valor del campo actual
           const valorCampo = proyecto[key]
-
-          // Verifica si el valor del campo es una cadena y si contiene el texto de búsqueda
+          // Verificamos si el valor del campo es una cadena y si contiene el texto de búsqueda
           if (typeof valorCampo === 'string' && valorCampo.toLowerCase().includes(textoBusqueda)) {
             // Si hay coincidencia, devuelve true para incluir el proyecto en la lista filtrada
             return true
@@ -228,8 +316,32 @@ export default {
         // Si no se encontró coincidencia en ningún campo, devuelve false para excluir el proyecto
         return false
       })
+      // Volvemos a pintar los datos con los proyectos filtrados por el buscador
+      pintaTabla(proyectosFiltrados)
+      pintaTarjetas(proyectosFiltrados)
+    })
 
-      console.log(proyectosFiltrados)
+    // *** BOTONES DE EDICIÓN Y BORRADO DE PROYECTOS ***
+    // Detectamos clic sobre main (Usamos delegación de eventos porque la tabla y tarjetas se actualizan constantemente en el DOM)
+    document.querySelector('main').addEventListener('click', (event) => {
+      // Si hemos pulsado sobre uno de los botones
+      if (event.target.classList.contains('botonAdmin')) {
+        const boton = event.target
+        // Capturamos el id de su dataset
+        const id = boton.dataset.id
+        if (boton.classList.contains('botonEditar')) {
+          // Si se trata de editar
+          console.log('Editar proyecto ' + id)
+
+          // Cargamos la vista para editar proyecto pasandole como parámetro el id
+          window.location = `#/proyectoEditar/${id}`
+        } else if (boton.classList.contains('botonBorrar')) {
+          // Si se trata de borrar
+          console.log('Borrar proyecto ' + id)
+
+          // *** AQUÍ VA LA FUNCIÓN QUE BORRA DE LA BASE DE DATOS EL PROYECTO CORRESPONDIENTE AL ID ***
+        }
+      }
     })
   }
 }
