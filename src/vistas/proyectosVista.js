@@ -172,10 +172,12 @@ export default {
         // sumamos un tr con los datos del proyecto de la iteración
         tbodyProyectos += // html
         `
-        <tr>
+        <tr data-id="${proyecto.id}" class="verDetalle">
           <td>
             <div class="containerImagen">
               <img 
+                class="verDetalle"
+                data-id="${proyecto.id}"
                 width="200px" 
                 src=${proyecto.imagen || '/assets/images/imagenVacia.png'} 
                 alt="imagen proyecto" />
@@ -360,6 +362,13 @@ export default {
 
           // *** AQUÍ VA LA FUNCIÓN QUE BORRA DE LA BASE DE DATOS EL PROYECTO CORRESPONDIENTE AL ID ***
         }
+      }
+    })
+
+    document.querySelector('table').addEventListener('click', (event) => {
+      if (event.target.classList.contains('verDetalle')) {
+        const id = event.target.dataset.id
+        window.location = `#/proyectoDetalle/${id}`
       }
     })
   }

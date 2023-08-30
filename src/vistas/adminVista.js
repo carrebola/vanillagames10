@@ -5,7 +5,7 @@ export default {
   template: // html
   `
   <div class="container">
-  <h1 class="mt-5">PAnel de administración</h1>
+  <h1 class="mt-5">Panel de administración</h1>
   <div class="row mt-5">
     <div class="col-12">
       <!--nav-tabs-->
@@ -66,14 +66,13 @@ export default {
 </div>
   `,
   script: () => {
-    console.log('Vista proyectos cargada')
     // Capturamos los datos del usuario logueado
     const usuario = ls.getUsuario()
 
     // **** AQUI DEBEMOS CAPTURAR LOS PROYECTOS DE LA BASE DE DATOS ****
 
     // Capturamos proyectos y guardamos en variable para poder ser filtrada
-    const datos = proyectos
+    const datosProyectos = proyectos
     const datosUsuarios = perfiles
 
     // Definimos que por defecto se muestran 'proyectos'
@@ -81,7 +80,7 @@ export default {
     // *** Detectamos si se cambia de proyectos a usuarios al hacer click en las pestañas ***
     document.querySelector('.nav-tabs').addEventListener('click', (event) => {
       if (event.target.classList.contains('fichaUsuarios')) {
-        // Si click en mis proyectos cambiamos pestaña activa
+        // Si click en Usuarios cambiamos pestaña activa
         document.querySelector('.fichaUsuarios').classList.add('active')
         document.querySelector('.fichaProyectos').classList.remove('active')
         selectUsuarios = true
@@ -90,7 +89,7 @@ export default {
         document.querySelector('#tabUsuarios').classList.remove('d-none')
         document.querySelector('#tabProyectos').classList.add('d-none')
       } else {
-        // Si click en todos los proyectos cambiamos pestaña activa
+        // Si click en Proyectos cambiamos pestaña activa
         document.querySelector('.fichaProyectos').classList.add('active')
         document.querySelector('.fichaUsuarios').classList.remove('active')
         selectUsuarios = false
@@ -100,16 +99,15 @@ export default {
         document.querySelector('#tabUsuarios').classList.add('d-none')
       }
       // Actualizamos los datos en el panel central
-      pintaTabla(datos)
+      pintaProyectos(datosProyectos)
       pintaUsuarios(datosUsuarios)
     })
 
-    // *** FUNCIÓN PARA PINTAR TABLA A PARTIR DE ARRAY datos ***
-    const pintaTabla = (proyectosFiltrados) => {
+    // *** FUNCIÓN PARA PINTAR TABLA PROYECTOS A PARTIR DE ARRAY datos ***
+    const pintaProyectos = (proyectosFiltrados) => {
       let tablaProyectos = // html
       `
       <!-- Tabla de proyectos -->
-    
       <table
         class="table table-hover align-middle mt-3"
         style="min-width: 1000px"
@@ -186,7 +184,7 @@ export default {
         </tbody>
       </table>
       `
-      // inyectamos el resultado en el tbody
+      // inyectamos el resultado en tabProyectos
       document.querySelector('#tabProyectos').innerHTML = tablaProyectos
     }
 
@@ -234,98 +232,98 @@ export default {
         tablaUsuarios += // html
         `
           <tr>
-              <form novalidate action="">
-                <td>
-                  <div class="containerImagen">
-                    <div
-                      class="rounded-circle d-flex align-items-end justify-content-end"
-                      style="
-                        background-image: url(${usuario.avatar});
-                        width: 50px;
-                        height: 50px;
-                        background-size: cover;
-                        background-position: center;
-                      "
-                    >
-                      <i class="btn btn-success btn-sm rounded-circle bi bi-pencil"></i>
-                    </div>
+            <form  action="" class="formulario was-validated">
+              <td>
+                <div class="containerImagen">
+                  <div
+                    class="rounded-circle d-flex align-items-end justify-content-end"
+                    style="
+                      background-image: url(${usuario.avatar});
+                      width: 50px;
+                      height: 50px;
+                      background-size: cover;
+                      background-position: center;
+                    "
+                  >
+                    <i class="btn btn-success btn-sm rounded-circle bi bi-pencil"></i>
                   </div>
-                </td>
-                <td>
-                  <!-- URL imagen -->
-                  <input
-                    type="url"
-                    class="form-control form-control-sm"
-                    value="${usuario.avatar}"
-                  />
-                  <div class="invalid-feedback">
-                    La url no es válida
-                  </div>
-                </td>
-                <td>
-                  <!-- email -->
-                  <input
-                    required
-                    type="email"
-                    class="form-control form-control-sm"
-                    value="${usuario.email}"
-                  />
-                  <div class="invalid-feedback">
-                    Formato incorrecto
-                  </div>
-                </td>
-                <td>
-                  <input
-                    required
-                    type="text"
-                    class="form-control form-control-sm"
-                    value="${usuario.nombre}"
-                  />
-                  <div class="invalid-feedback">
-                    Nombre requerido
-                  </div>
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="form-control form-control-sm"
-                    value="${usuario.apellidos}"
-                  />
-                </td>
+                </div>
+              </td>
+              <td>
+                <!-- URL imagen -->
+                <input
+                  type="url"
+                  class="form-control form-control-sm"
+                  value="${usuario.avatar}"
+                />
+                <div class="invalid-feedback">
+                  La url no es válida
+                </div>
+              </td>
+              <td>
+                <!-- email -->
+                <input
+                  required
+                  type="email"
+                  class="form-control form-control-sm"
+                  value="${usuario.email}"
+                />
+                <div class="invalid-feedback">
+                  Formato incorrecto
+                </div>
+              </td>
+              <td>
+                <input
+                  required
+                  type="text"
+                  class="form-control form-control-sm"
+                  value="${usuario.nombre}"
+                />
+                <div class="invalid-feedback">
+                  Nombre requerido
+                </div>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  value="${usuario.apellidos}"
+                />
+              </td>
 
-                <td>
-                  <input
-                    type="date"
-                    class="form-control form-control-sm"
-                    value="${usuario.created_at}"
-                  />
-                  <div class="invalid-feedback">
-                    Formato incorrecto
-                  </div>
-                </td>
-                <td>
-                  <select class="form-control form-control-sm" name="" id="">
-                    <option value="${usuario.rol}">${usuario.rol}</option>
-                    <option value="registrado">registrado</option>
-                    <option value="desarrollador">desarrollador</option>
-                    <option value="admin">admin</option>
-                  </select>
-                </td>
-                <td>
-                  <select class="form-control form-control-sm" name="" id="">
-                    <option value="${usuario.estado}">${usuario.estado}</option>
-                    <option value="Activo">Activo</option>
-                    <option value="Inactivo">Inactivo</option>
-                  </select>
-                </td>
-                <td>
-                  <button data-id="${usuario.user_id}" type="submit" class="btn btn-sm btn-success botonActualizar">
-                    Actualizar
-                  </button>
-                </td>
-                <td><i data-id="${usuario.user_id}" class="btn btn-sm btn-outline-danger bi bi-trash3 botonEliminar"></i></td>
-              </form>
-            </tr>
+              <td>
+                <input
+                  type="date"
+                  class="form-control form-control-sm"
+                  value="${usuario.created_at}"
+                />
+                <div class="invalid-feedback">
+                  Formato incorrecto
+                </div>
+              </td>
+              <td>
+                <select class="form-control form-control-sm" name="" id="">
+                  <option value="${usuario.rol}">${usuario.rol}</option>
+                  <option value="registrado">registrado</option>
+                  <option value="desarrollador">desarrollador</option>
+                  <option value="admin">admin</option>
+                </select>
+              </td>
+              <td>
+                <select class="form-control form-control-sm" name="" id="">
+                  <option value="${usuario.estado}">${usuario.estado}</option>
+                  <option value="Activo">Activo</option>
+                  <option value="Inactivo">Inactivo</option>
+                </select>
+              </td>
+              <td>
+                <button data-id="${usuario.user_id}" type="submit" class="btn btn-sm btn-success botonActualizar">
+                  Actualizar
+                </button>
+              </td>
+              <td><i data-id="${usuario.user_id}" class="btn btn-sm btn-outline-danger bi bi-trash3 botonEliminar"></i></td>
+            </form>
+          </tr>
         `
       })
       // inyectamos el resultado en el tbody
@@ -333,41 +331,8 @@ export default {
     }
 
     // *** Pintamos los datos en tabla y tarjetas ***
-    pintaTabla(datos)
+    pintaProyectos(datosProyectos)
     pintaUsuarios(datosUsuarios)
-
-    // *** SELECCIÓN DE VISTA EN FORMATO TABLA O TARJETAS ***
-    // Selección vista tabla
-    document.querySelector('.vistaTabla').addEventListener('click', (boton) => {
-      // Lineas originales del html para los tabs:
-      // <div class="col-12 d-none d-xl-block" style="overflow-x: auto">
-      // <div class="d-xl-none row">
-      // Pinta el boton de verde
-      boton.target.classList.add('btn-success')
-      // Pinta el otro botón de gris y elimina el verde
-      const botonTarjeta = document.querySelector('.vistaTarjetas')
-      botonTarjeta.classList.remove('btn-success')
-      botonTarjeta.classList.add('btn-secondary')
-
-      // Muestra y oculta los tabs
-      document.querySelector('#tabTabla').setAttribute('class', 'col-12 d-block')
-      document.querySelector('#tabTarjetas').setAttribute('class', 'd-none')
-    })
-
-    // Selección vista tarjetas
-    document.querySelector('.vistaTarjetas').addEventListener('click', (boton) => {
-      console.log('vistaTarjetas')
-      // Pinta el boton de verde
-      boton.target.classList.add('btn-success')
-      // Pinta el otro botón de gris y elimina el verde
-      const botonTabla = document.querySelector('.vistaTabla')
-      botonTabla.classList.remove('btn-success')
-      botonTabla.classList.add('btn-secondary')
-
-      // Muestra y oculta los tabs
-      document.querySelector('#tabTabla').setAttribute('class', 'd-none')
-      document.querySelector('#tabTarjetas').setAttribute('class', 'row')
-    })
 
     // *** FILTRO PARA BUSCADOR ***
     // Capturamos el input de búsqueda
@@ -381,7 +346,7 @@ export default {
       if (selectUsuarios) {
         informacion = datosUsuarios
       } else {
-        informacion = datos
+        informacion = datosProyectos
       }
       const informacionFiltrada = informacion.filter(proyecto => {
         // Itera sobre las propiedades (campos) de cada proyecto
@@ -401,17 +366,17 @@ export default {
       if (selectUsuarios) {
         pintaUsuarios(informacionFiltrada)
       } else {
-        pintaTabla(informacionFiltrada)
+        pintaProyectos(informacionFiltrada)
       }
     })
     // Borrar datos del input del buscador
     document.querySelector('#borrarBuscador').addEventListener('click', () => {
       // Borramos contenido del buscador
-      inputBusqueda.value = ''
+      const inputBusqueda = document.getElementById('inputBusqueda').value = ''
       // Actualizamos array con todos los proyectos
       // const proyectosFiltrados = datos
       // Actualizamos los datos en el panel central
-      pintaTabla(datos)
+      pintaProyectos(datosProyectos)
       pintaUsuarios(datosUsuarios)
     })
 
@@ -437,5 +402,30 @@ export default {
         }
       }
     })
+
+    // *** VALIDACION DE FORMULARIOS CON BOOTSTRAP ***
+
+    // // Capturamos cualquier posible evento submit en el main
+    // const formularios = document.querySelectorAll('.formulario')
+    // console.log(formularios)
+    // formularios.forEach(formulario => {
+    //   console.log(formulario)
+    //   formulario.classList.add('was-validated')
+    //   formulario.addEventListener('submit', (e) => {
+        
+    //     console.log('evento a submit')
+    //   })
+    // })
+
+    // Detectamos su evento submit (enviar)
+
+    // Comprobamos si el formulario no valida
+    // if (!formulario.checkValidity()) {
+    //   console.log('No valida')
+    // } else {
+    //   enviarDatos(formulario)
+    // }
+    // // Y añadimos la clase 'was-validate' para que se muestren los mensajes
+    // formulario.classList.add('was-validated')
   }
 }
