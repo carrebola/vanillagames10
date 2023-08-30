@@ -103,7 +103,7 @@ export const header = {
         // Borramos el localstorage
         ls.setUsuario('')
         // Cargamos la pagina home
-        window.locate = '#/home'
+        window.location = '#/home'
         header.script()
       }
     })

@@ -19,7 +19,7 @@ export default {
           </button>
         </li>
         <!--Etiqueta Mis proyectos-->
-        <li class="nav-item w-50">
+        <li id="pestanyaMisProyectos" class="nav-item w-50">
           <button 
             class="selectorFicha fichaMisProyectos nav-link w-100"
           >
@@ -33,7 +33,7 @@ export default {
     <div class="row">
       <div class="col-12 col-sm-4 mb-3">
       <!-- Boton para subir proyectos -->
-        <a href="#/proyectoNuevo" class="btn btn-primary w-100">Subir proyecto</a>
+        <a id="botonSubirProyecto" href="#/proyectoNuevo" class="btn btn-primary w-100">Subir proyecto</a>
       </div>
       <div class="d-flex col-12 col-sm-8 mb-3">
         <!-- Botones para alternar entre vista de tabla o de tarjetas -->
@@ -62,7 +62,7 @@ export default {
     </div>
     
     <!-- Tabla de proyectos -->
-    <div class="col-12 d-none d-xl-block" style="overflow-x: auto">
+    <div id="tabTabla" class="col-12 d-none d-xl-block" style="overflow-x: auto">
       <table
         class="table table-hover align-middle mt-3"
         style="min-width: 1000px"
@@ -95,13 +95,14 @@ export default {
         </thead>
         <tbody id="tbodyProyectos">
           <!-- Aqui van los datos generados por la lógica -->
+          <p>No tienes proyectos</p>
         </tbody>
       </table>
     </div>
 
     <!-- Panel de tarjetas -->
     <div id="tabTarjetas" class="d-xl-none row">
-      ...
+      <p>No tienes proyectos</p>
     </div>
   </div>
 </div>
@@ -110,15 +111,19 @@ export default {
     console.log('Vista proyectos cargada')
     // Capturamos los datos del usuario logueado
     const usuario = ls.getUsuario()
+    // Ocultamos el botón de subir proyecto si el rol es registrado
+    if (usuario.rol === 'registrado') {
+      document.querySelector('#botonSubirProyecto').classList.add('disabled')
+    }
 
     // **** AQUI DEBEMOS CAPTURAR LOS PROYECTOS DE LA BASE DE DATOS ****
 
     // Capturamos proyectos y guardamos en variable para poder ser filtrada
-    let proyectosFiltrados = proyectos
+    const datos = proyectos
 
     // Definimos que por defecto se muestran 'mis proyectos'
     let misProyectos = false
-    // Detectamos si se cambia de proyectos a mis proyectos al hacer click en las pestañas
+    // *** Detectamos si se cambia de proyectos a mis proyectos al hacer click en las pestañas ***
     document.querySelector('.nav-tabs').addEventListener('click', (event) => {
       if (event.target.classList.contains('fichaMisProyectos')) {
         // Si click en mis proyectos cambiamos pestaña activa
@@ -132,21 +137,22 @@ export default {
         misProyectos = false
       }
       // Actualizamos los datos en el panel central
-      pintaTabla(proyectosFiltrados)
-      pintaTarjetas(proyectosFiltrados)
+      pintaTabla(datos)
+      pintaTarjetas(datos)
     })
 
     // *** FUNCIÓN PARA PINTAR TABLA A PARTIR DE ARRAY datos ***
-    const pintaTabla = (datos) => {
+    const pintaTabla = (proyectosFiltrados) => {
       // Si tenemos seleccionada la opción 'mis proyectos' filtramos los proyectos por user_id
       if (misProyectos) {
         proyectosFiltrados = datos.filter((proyecto) => proyecto.user_id === usuario.user_id)
         console.log(proyectos)
       } else {
-        proyectosFiltrados = datos
+        // proyectosFiltrados = datos
       }
 
       let tbodyProyectos = ''
+      console.log(misProyectos)
       // Para cada proyecto del array 'proyectos'
       proyectosFiltrados.forEach(proyecto => {
         // Generamos botones dependiendo de si el proyecto ha sido creado por el usuario logueado
@@ -194,13 +200,15 @@ export default {
     }
 
     // Función para pintar tarjetas
-    const pintaTarjetas = (datos) => {
+    const pintaTarjetas = (proyectosFiltrados) => {
+      console.log(misProyectos)
+
       // Si tenemos seleccionada la opción 'mis proyectos' filtramos los proyectos por user_id
       if (misProyectos) {
         proyectosFiltrados = datos.filter((proyecto) => proyecto.user_id === usuario.user_id)
         console.log(proyectos)
       } else {
-        proyectosFiltrados = datos
+        // proyectosFiltrados = datos
       }
       let tarjetasProyectos = ''
       // Para cada proyecto del array 'proyectosFiltrados'
@@ -257,9 +265,10 @@ export default {
       // inyectamos el resultado en tbody
       document.querySelector('#tabTarjetas').innerHTML = tarjetasProyectos
     }
-    // Pintamos los datos en tabla y tarjetas
-    pintaTabla(proyectosFiltrados)
-    pintaTarjetas(proyectosFiltrados)
+
+    // *** Pintamos los datos en tabla y tarjetas ***
+    pintaTabla(datos)
+    pintaTarjetas(datos)
 
     // *** SELECCIÓN DE VISTA EN FORMATO TABLA O TARJETAS ***
     // Selección vista tabla
@@ -302,7 +311,7 @@ export default {
       // Capturamos el texto de búsqueda del input, conviértelo a minúsculas y elimina espacios en blanco al principio y al final
       const textoBusqueda = inputBusqueda.value.toLowerCase().trim()
       // Filtramos los proyectos que coinciden con el texto de búsqueda en cualquier campo
-      const proyectosFiltrados = proyectos.filter(proyecto => {
+      const proyectosFiltrados = datos.filter(proyecto => {
         // Itera sobre las propiedades (campos) de cada proyecto
         for (const key in proyecto) {
           // Obtenemos el valor del campo actual
@@ -321,14 +330,14 @@ export default {
       pintaTarjetas(proyectosFiltrados)
     })
     // Borrar datos del input del buscador
-    document.querySelector('#borrarBuscador').addEventListener('click', ()=>{
+    document.querySelector('#borrarBuscador').addEventListener('click', () => {
       // Borramos contenido del buscador
       inputBusqueda.value = ''
       // Actualizamos array con todos los proyectos
-      proyectosFiltrados = proyectos
+      // const proyectosFiltrados = datos
       // Actualizamos los datos en el panel central
-      pintaTabla(proyectosFiltrados)
-      pintaTarjetas(proyectosFiltrados)
+      pintaTabla(datos)
+      pintaTarjetas(datos)
     })
 
     // *** BOTONES DE EDICIÓN Y BORRADO DE PROYECTOS ***
