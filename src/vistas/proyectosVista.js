@@ -55,7 +55,7 @@ export default {
             aria-describedby="addon-wrapping"
           />
           <span class="input-group-text" id="addon-wrapping"
-            ><i class="bi bi-x"></i
+            ><i id="borrarBuscador" class="bi bi-x"></i
           ></span>
         </div>
       </div>
@@ -317,6 +317,16 @@ export default {
         return false
       })
       // Volvemos a pintar los datos con los proyectos filtrados por el buscador
+      pintaTabla(proyectosFiltrados)
+      pintaTarjetas(proyectosFiltrados)
+    })
+    // Borrar datos del input del buscador
+    document.querySelector('#borrarBuscador').addEventListener('click', ()=>{
+      // Borramos contenido del buscador
+      inputBusqueda.value = ''
+      // Actualizamos array con todos los proyectos
+      proyectosFiltrados = proyectos
+      // Actualizamos los datos en el panel central
       pintaTabla(proyectosFiltrados)
       pintaTarjetas(proyectosFiltrados)
     })
