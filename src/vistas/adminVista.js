@@ -101,7 +101,7 @@ export default {
       }
       // Actualizamos los datos en el panel central
       pintaTabla(datos)
-      pintaUsuarios(datosUsuario)
+      pintaUsuarios(datosUsuarios)
     })
 
     // *** FUNCIÓN PARA PINTAR TABLA A PARTIR DE ARRAY datos ***
@@ -240,7 +240,7 @@ export default {
                     <div
                       class="rounded-circle d-flex align-items-end justify-content-end"
                       style="
-                        background-image: url(./images/avatar.svg);
+                        background-image: url(${usuario.avatar});
                         width: 50px;
                         height: 50px;
                         background-size: cover;
@@ -256,7 +256,7 @@ export default {
                   <input
                     type="url"
                     class="form-control form-control-sm"
-                    value="http://imagen.com"
+                    value="${usuario.avatar}"
                   />
                   <div class="invalid-feedback">
                     La url no es válida
@@ -268,7 +268,7 @@ export default {
                     required
                     type="email"
                     class="form-control form-control-sm"
-                    value="email@email.com"
+                    value="${usuario.email}"
                   />
                   <div class="invalid-feedback">
                     Formato incorrecto
@@ -279,7 +279,7 @@ export default {
                     required
                     type="text"
                     class="form-control form-control-sm"
-                    value="Nombre usuario"
+                    value="${usuario.nombre}"
                   />
                   <div class="invalid-feedback">
                     Nombre requerido
@@ -289,7 +289,7 @@ export default {
                   <input
                     type="text"
                     class="form-control form-control-sm"
-                    value="Apellidos usuario"
+                    value="${usuario.apellidos}"
                   />
                 </td>
 
@@ -297,7 +297,7 @@ export default {
                   <input
                     type="date"
                     class="form-control form-control-sm"
-                    value="12/12/2023 proyecto"
+                    value="${usuario.created_at}"
                   />
                   <div class="invalid-feedback">
                     Formato incorrecto
@@ -305,22 +305,25 @@ export default {
                 </td>
                 <td>
                   <select class="form-control form-control-sm" name="" id="">
-                    <option value="1">opción</option>
-                    <option value="2">opción2</option>
+                    <option value="${usuario.rol}">${usuario.rol}</option>
+                    <option value="registrado">registrado</option>
+                    <option value="desarrollador">desarrollador</option>
+                    <option value="admin">admin</option>
                   </select>
                 </td>
                 <td>
                   <select class="form-control form-control-sm" name="" id="">
-                    <option value="1">opción</option>
-                    <option value="2">opción2</option>
+                    <option value="${usuario.estado}">${usuario.estado}</option>
+                    <option value="Activo">Activo</option>
+                    <option value="Inactivo">Inactivo</option>
                   </select>
                 </td>
                 <td>
-                  <button type="submit" class="btn btn-sm btn-success">
+                  <button data-id="${usuario.user_id}" type="submit" class="btn btn-sm btn-success botonActualizar">
                     Actualizar
                   </button>
                 </td>
-                <td><i class="btn btn-sm btn-outline-danger bi bi-trash3"></i></td>
+                <td><i data-id="${usuario.user_id}" class="btn btn-sm btn-outline-danger bi bi-trash3 botonEliminar"></i></td>
               </form>
             </tr>
         `
