@@ -51,7 +51,9 @@ export default {
     document.querySelector('#nombreJuego').innerHTML = proyecto.nombre
     document.querySelector('#descripcion').innerHTML = proyecto.descripcion
     document.querySelector('#estado').innerHTML = proyecto.estado
-    document.querySelector('#fecha').innerHTML = proyecto.fecha
+    const fecha = proyecto.created_at
+    const fechaCorta = fecha.split('T')[0]
+    document.querySelector('#fecha').innerHTML = fechaCorta
     document.querySelector('#enlace').innerHTML = proyecto.enlace
     document.querySelector('#repositorio').innerHTML = proyecto.repositorio
 

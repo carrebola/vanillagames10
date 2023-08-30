@@ -1,18 +1,18 @@
+import { proyectos } from "../bd/datosPrueba"
 export default {
   template: // html
   `
   <div class="container">
   <h1 class="mt-5">Edición de proyecto</h1>
   <div class="d-flex justify-content-end">
-    <bottom class="btn btn-outline-secondary mt-5">
-      <i class="bi bi-arrow-bar-left" style="font-size: 1em"></i>
+    <bottom id="botonVolver" class="btn btn-outline-secondary mt-5 bi bi-arrow-bar-left router-link">
       Volver</bottom
     >
   </div>
   <form novalidate id="formulario" action="" class="">
     <div class="row mt-2">
       <div class="col-12 col-md-4 pt-2 mb-3">
-        <img src="/assets/images/juego.jpg" alt="" class="img-fluid" />
+        <img id="imagenJuego" src="/assets/images/juego.jpg" alt="" class="img-fluid" />
         <label class="form-label mt-2" for="urlImagen"
           ><strong>URL imagen: </strong></label
         >
@@ -33,7 +33,7 @@ export default {
         <label class="form-label" for="nombre"><strong>Nombre: </strong></label>
         <input
           required
-          id="nombre"
+          id="nombreJuego"
           type="text"
           value="Nombre Autor"
           class="form-control"
@@ -55,8 +55,8 @@ export default {
           ><strong>Estado: </strong></label
         >
         <select required id="estado" class="form-control">
-          <option value="estado">estado</option>
-          <option value="otro estado">otro estado</option>
+          <option value="Cerrado">Cerrado</option>  
+          <option value="En desarrollo">En desarrollo</option>
         </select>
         <div class="invalid-feedback">
           Debes definir un estado
@@ -66,7 +66,7 @@ export default {
         <label class="form-label mt-2" for="fecha"
           ><strong>Fecha: </strong></label
         >
-        <input id="fecha" type="date" class="form-control" value="12/12/2023" />
+        <input id="fecha" type="date" class="form-control"  />
         <div class="invalid-feedback">
           El formato no es correcto
         </div>
@@ -98,6 +98,7 @@ export default {
 
         <!-- Submit -->
         <input
+          id="subirProyecto"
           type="submit"
           class="btn btn-success mt-3"
           value="Subir proyecto"
@@ -107,7 +108,29 @@ export default {
   </form>
 </div>
   `,
-  script: () => {
+  script: (id) => {
+    console.log('Vista proyectoEditarDetalle cargada')
+    console.log(proyectos, id)
+
+    // Simulamos la consulta a un proyecto por id
+    const proyectoArray = proyectos.filter(p => p.id == id)
+    const proyecto = proyectoArray[0]
+    document.querySelector('#imagenJuego').setAttribute('src', proyecto.imagen)
+    document.querySelector('#urlImagen').value = proyecto.imagen
+    document.querySelector('#nombreJuego').value = proyecto.nombre
+    document.querySelector('#descripcion').value = proyecto.descripcion
+    document.querySelector('#estado').value = proyecto.estado
+    const fecha = proyecto.created_at
+    const fechaCorta = fecha.split('T')[0]
+    document.querySelector('#fecha').value = fechaCorta
+    console.log(fechaCorta);
+    document.querySelector('#enlace').value = proyecto.enlace
+    document.querySelector('#repositorio').value = proyecto.repositorio
+
+    // Boton volver atras
+    document.querySelector('#botonVolver').addEventListener('click', () => {
+      window.history.back()
+    })
     console.log('vista proyectoDetalleEditar cargada')
     // Validación bootstrap
 
