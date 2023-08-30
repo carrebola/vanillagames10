@@ -1,5 +1,4 @@
 import { proyectos, perfiles } from '../bd/datosPrueba'
-
 import { ls } from '../componentes/funciones'
 
 export default {
@@ -102,7 +101,7 @@ export default {
       }
       // Actualizamos los datos en el panel central
       pintaTabla(datos)
-      pintaTarjetas(datos)
+      pintaUsuarios(datosUsuario)
     })
 
     // *** FUNCIÓN PARA PINTAR TABLA A PARTIR DE ARRAY datos ***
@@ -410,7 +409,7 @@ export default {
       // const proyectosFiltrados = datos
       // Actualizamos los datos en el panel central
       pintaTabla(datos)
-      pintaTarjetas(datos)
+      pintaUsuarios(datosUsuarios)
     })
 
     // *** BOTONES DE EDICIÓN Y BORRADO DE PROYECTOS ***
