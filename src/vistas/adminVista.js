@@ -58,7 +58,7 @@ export default {
     </div>
     
     </div>
-    <div id="tabProyectos" class="col-12" style="overflow-x: auto">
+    <div id="tabProyectos" class="col-12 d-none" style="overflow-x: auto">
     ...
     </div>
 
@@ -193,139 +193,147 @@ export default {
       let tablaUsuarios = // html
       `
       <!-- tabla usuarios-->
-      <table
-      class="table table-hover align-middle mt-3"
-      style="min-width: 1200px"
-      >
-      <thead>
-        <tr>
-          <th></th>
-          <th>
-            URL imagen <span><i class="bi bi-caret-down"></i></span>
-          </th>
-          <th>
-            Email <span><i class="bi bi-caret-down"></i></span>
-          </th>
-          <th>
-            Nombre <span><i class="bi bi-caret-up"></i></span>
-          </th>
-          <th>
-            Apellidos <span><i class="bi bi-caret-up"></i></span>
-          </th>
-          <th>
-            Fecha <span><i class="bi bi-caret-up"></i></span>
-          </th>
-          <th>
-            Rol <span><i class="bi bi-caret-up"></i></span>
-          </th>
-          <th>
-            Estado <span><i class="bi bi-caret-up"></i></span>
-          </th>
-          <th></th>
-          <th></th>
-        </tr>
-      </thead>
-      `
+      <form  action="" class="form formulario" novalidate>
+        <table
+        class="table table-hover align-middle mt-3"
+        style="min-width: 1200px"
+        >
+        <thead>
+          <tr>
+            <th></th>
+            <th>
+              URL imagen <span><i class="bi bi-caret-down"></i></span>
+            </th>
+            <th>
+              Email <span><i class="bi bi-caret-down"></i></span>
+            </th>
+            <th>
+              Nombre <span><i class="bi bi-caret-up"></i></span>
+            </th>
+            <th>
+              Apellidos <span><i class="bi bi-caret-up"></i></span>
+            </th>
+            <th>
+              Fecha <span><i class="bi bi-caret-up"></i></span>
+            </th>
+            <th>
+              Rol <span><i class="bi bi-caret-up"></i></span>
+            </th>
+            <th>
+              Estado <span><i class="bi bi-caret-up"></i></span>
+            </th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        `
       // Para cada proyecto del array 'proyectos'
       usuariosFiltrados.forEach(usuario => {
         // sumamos un tr con los datos del proyecto de la iteración
         tablaUsuarios += // html
-        `
-          <tr>
-            <form  action="" class="formulario was-validated">
-              <td>
-                <div class="containerImagen">
-                  <div
-                    class="rounded-circle d-flex align-items-end justify-content-end"
-                    style="
-                      background-image: url(${usuario.avatar});
-                      width: 50px;
-                      height: 50px;
-                      background-size: cover;
-                      background-position: center;
-                    "
-                  >
-                    <i class="btn btn-success btn-sm rounded-circle bi bi-pencil"></i>
+          `
+            <tr>
+                <td>
+                  <div class="containerImagen">
+                    <div
+                      class="rounded-circle d-flex align-items-end justify-content-end"
+                      style="
+                        background-image: url(${usuario.avatar});
+                        width: 50px;
+                        height: 50px;
+                        background-size: cover;
+                        background-position: center;
+                      "
+                    >
+                      <i class="btn btn-success btn-sm rounded-circle bi bi-pencil"></i>
+                    </div>
                   </div>
-                </div>
-              </td>
-              <td>
-                <!-- URL imagen -->
-                <input
-                  type="url"
-                  class="form-control form-control-sm"
-                  value="${usuario.avatar}"
-                />
-                <div class="invalid-feedback">
-                  La url no es válida
-                </div>
-              </td>
-              <td>
-                <!-- email -->
-                <input
-                  required
-                  type="email"
-                  class="form-control form-control-sm"
-                  value="${usuario.email}"
-                />
-                <div class="invalid-feedback">
-                  Formato incorrecto
-                </div>
-              </td>
-              <td>
-                <input
-                  required
-                  type="text"
-                  class="form-control form-control-sm"
-                  value="${usuario.nombre}"
-                />
-                <div class="invalid-feedback">
-                  Nombre requerido
-                </div>
-              </td>
-              <td>
-                <input
-                  type="text"
-                  class="form-control form-control-sm"
-                  value="${usuario.apellidos}"
-                />
-              </td>
+                </td>
+                <td>
+                  <!-- URL imagen -->
+                  <input
+                    id="urlImagen_${usuario.user_id}"
+                    type="url"
+                    class="form-control form-control-sm"
+                    value="${usuario.avatar}"
+                  />
+                  <div class="invalid-feedback">
+                    La url no es válida
+                  </div>
+                </td>
+                <td>
+                  <!-- email -->
+                  <input
+                    required
+                    id="email_${usuario.user_id}"
+                    type="email"
+                    class="form-control form-control-sm"
+                    value="${usuario.email}"
+                  />
+                  <div class="invalid-feedback">
+                    Formato incorrecto
+                  </div>
+                </td>
+                <td>
+                  <input
+                    required
+                    id="nombreUsuario_${usuario.user_id}"
+                    type="text"
+                    class="form-control form-control-sm"
+                    value="${usuario.nombre}"
+                  />
+                  <div class="invalid-feedback">
+                    Nombre requerido
+                  </div>
+                </td>
+                <td>
+                  <input
+                    id="apellidosUsuario_${usuario.user_id}"
+                    type="text"
+                    class="form-control form-control-sm"
+                    value="${usuario.apellidos}"
+                  />
+                </td>
 
-              <td>
-                <input
-                  type="date"
-                  class="form-control form-control-sm"
-                  value="${usuario.created_at}"
-                />
-                <div class="invalid-feedback">
-                  Formato incorrecto
-                </div>
-              </td>
-              <td>
-                <select class="form-control form-control-sm" name="" id="">
-                  <option value="${usuario.rol}">${usuario.rol}</option>
-                  <option value="registrado">registrado</option>
-                  <option value="desarrollador">desarrollador</option>
-                  <option value="admin">admin</option>
-                </select>
-              </td>
-              <td>
-                <select class="form-control form-control-sm" name="" id="">
-                  <option value="${usuario.estado}">${usuario.estado}</option>
-                  <option value="Activo">Activo</option>
-                  <option value="Inactivo">Inactivo</option>
-                </select>
-              </td>
-              <td>
-                <button data-id="${usuario.user_id}" type="submit" class="btn btn-sm btn-success botonActualizar">
-                  Actualizar
-                </button>
-              </td>
-              <td><i data-id="${usuario.user_id}" class="btn btn-sm btn-outline-danger bi bi-trash3 botonEliminar"></i></td>
-            </form>
-          </tr>
+                <td>
+                  <input
+                    id="fecha_${usuario.user_id}"
+                    type="date"
+                    class="form-control form-control-sm"
+                    value="${usuario.created_at}"
+                  />
+                  <div class="invalid-feedback">
+                    Formato incorrecto
+                  </div>
+                </td>
+                <td>
+                  <select class="form-control form-control-sm" name="" id="rol_${usuario.user_id}">
+                    <option value="${usuario.rol}">${usuario.rol}</option>
+                    <option value="registrado">registrado</option>
+                    <option value="desarrollador">desarrollador</option>
+                    <option value="admin">admin</option>
+                  </select>
+                </td>
+                <td>
+                  <select class="form-control form-control-sm" name="" id="estado_${usuario.user_id}">
+                    <option value="${usuario.estado}">${usuario.estado}</option>
+                    <option value="Activo">Activo</option>
+                    <option value="Inactivo">Inactivo</option>
+                  </select>
+                </td>
+                <td>
+                  <button data-id="${usuario.user_id}" class="btn btn-sm btn-outline-danger bi bi-trash3 botonEliminar"></button>
+                </td>
+                <td>
+                  <button data-id="${usuario.user_id}" type="submit" class="btn btn-sm btn-success botonActualizar">
+                    Actualizar
+                  </button>
+                </td>
+            </tr>
         `
       })
+      tablaUsuarios += '</tbody></table></form>'
       // inyectamos el resultado en el tbody
       document.querySelector('#tabUsuarios').innerHTML = tablaUsuarios
     }
@@ -404,28 +412,58 @@ export default {
     })
 
     // *** VALIDACION DE FORMULARIOS CON BOOTSTRAP ***
+    const formulario = document.querySelector('.formulario')
+    formulario.addEventListener('change', (e) => {
+      e.preventDefault()
+      // Comprobamos si el formulario no valida
+      if (!formulario.checkValidity()) {
+        console.log('No valida')
+        // Y añadimos la clase 'was-validate' para que se muestren los mensajes
+        formulario.classList.add('was-validated')
+      }
+    })
 
-    // // Capturamos cualquier posible evento submit en el main
-    // const formularios = document.querySelectorAll('.formulario')
-    // console.log(formularios)
-    // formularios.forEach(formulario => {
-    //   console.log(formulario)
-    //   formulario.classList.add('was-validated')
-    //   formulario.addEventListener('submit', (e) => {
-        
-    //     console.log('evento a submit')
-    //   })
-    // })
+    // Detectamos enviar datos
+    document.querySelector('.formulario').addEventListener('click', (e) => {
+      console.log('click en envialr')
+      e.preventDefault()
+      e.stopPropagation()
+      if (e.target.classList.contains('botonActualizar') && formulario.checkValidity()) {
+        const id = e.target.dataset.id
+        enviaDatos(id)
+      } else {
+        formulario.classList.add('was-validated')
+      }
 
-    // Detectamos su evento submit (enviar)
+      // Borrar registro
+      if (e.target.classList.contains('botonEliminar')) {
+        const tr = e.target.parentNode.parentNode
+        console.log(tr);
+        //ocultar tr
+        tr.classList.add('d-none')
+        const id = e.target.dataset.id
 
-    // Comprobamos si el formulario no valida
-    // if (!formulario.checkValidity()) {
-    //   console.log('No valida')
-    // } else {
-    //   enviarDatos(formulario)
-    // }
-    // // Y añadimos la clase 'was-validate' para que se muestren los mensajes
-    // formulario.classList.add('was-validated')
+        borrarUsuario(id)
+      }
+    })
+    // Función para enviar datos a la base de datos
+    function enviaDatos (id) {
+      // capturamos los datos del tr correspondiente al botón pulsado
+      console.log(id)
+      const proyectoEditado = {
+        imagen: document.querySelector('#urlImagen_' + id).value,
+        nombre: document.querySelector('#nombreUsuario_' + id).value,
+        apellidos: document.querySelector('#apellidosUsuario_' + id).value,
+        estado: document.querySelector('#estado_' + id).value,
+        email: document.querySelector('#email_' + id).value
+      }
+      alert(`Enviando a la base de datos el objeto con id = ${usuario.user_id}`)
+      console.log(`Enviando a la base de datos el objeto con id = ${usuario.user_id}`, proyectoEditado)
+    }
+
+    function borrarUsuario (id) {
+      alert('Borrando usuario ' + id)
+    }
   }
+
 }

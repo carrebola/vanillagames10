@@ -37,9 +37,9 @@ export default {
       </div>
       <div class="d-flex col-12 col-sm-8 mb-3">
         <!-- Botones para alternar entre vista de tabla o de tarjetas -->
-        <button class="btn btn-secondary me-2 bi bi-grid-3x3-gap vistaTabla">
+        <button class="btn btn-secondary me-2 bi bi-list vistaTabla">
         </button>
-        <button class="btn btn-secondary me-2 bi bi-list vistaTarjetas">
+        <button class="btn btn-secondary me-2 bi bi-grid-3x3-gap vistaTarjetas">
         </button>
         <!-- Buscador -->
         <div class="input-group flex-nowrap">
@@ -237,7 +237,8 @@ export default {
           <div class="card mb-3">
             <div class="row g-0">
               <div
-                class="col-4"
+                class="col-4 verDetalle"
+                data-id="${proyecto.id}"
                 style="
                   background-image: url(${proyecto.imagen || '/assets/images/imagenVacia.png'});
                   background-position: center;
@@ -365,9 +366,17 @@ export default {
       }
     })
 
-    document.querySelector('table').addEventListener('click', (event) => {
+    document.querySelector('main').addEventListener('click', (event) => {
+      let id = ''
+      // Si hacemos clic sobre cualquier zona de una celda
+      if (event.target.tagName === 'TD') {
+        console.log('clic en td')
+        id = event.target.parentNode.dataset.id
+        window.location = `#/proyectoDetalle/${id}`
+      }
+      // Si hacemos clic sobre la imagen
       if (event.target.classList.contains('verDetalle')) {
-        const id = event.target.dataset.id
+        id = event.target.dataset.id
         window.location = `#/proyectoDetalle/${id}`
       }
     })

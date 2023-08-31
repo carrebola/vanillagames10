@@ -1,4 +1,4 @@
-import { proyectos } from "../bd/datosPrueba"
+import { proyectos } from '../bd/datosPrueba'
 export default {
   template: // html
   `
@@ -123,7 +123,7 @@ export default {
     const fecha = proyecto.created_at
     const fechaCorta = fecha.split('T')[0]
     document.querySelector('#fecha').value = fechaCorta
-    console.log(fechaCorta);
+    console.log(fechaCorta)
     document.querySelector('#enlace').value = proyecto.enlace
     document.querySelector('#repositorio').value = proyecto.repositorio
 
@@ -131,9 +131,8 @@ export default {
     document.querySelector('#botonVolver').addEventListener('click', () => {
       window.history.back()
     })
-    console.log('vista proyectoDetalleEditar cargada')
+    
     // Validación bootstrap
-
     // Capturamos el formulario en una variable
     const formulario = document.querySelector('#formulario')
     // Detectamos su evento submit (enviar)
@@ -143,9 +142,29 @@ export default {
       // Detenemos el evento enviar (submit)
         event.preventDefault()
         event.stopPropagation()
+
+        //* ** ENVIAMOS DATOS A LA BASE DE DATOS */
+      } else {
+        //* ** ENVIAMOS DATOS A LA BASE DE DATOS */
+        enviaDatos()
       }
+
       // Y añadimos la clase 'was-validate' para que se muestren los mensajes
       formulario.classList.add('was-validated')
     })
+
+    // Función para enviar datos a la base de datos
+    function enviaDatos () {
+      const proyectoEditado = {
+        imagen: document.querySelector('#urlImagen').value,
+        nombre: document.querySelector('#nombreJuego').value,
+        descripcion: document.querySelector('#descripcion').value,
+        estado: document.querySelector('#estado').value,
+        enlace: document.querySelector('#enlace').value,
+        repositorio: document.querySelector('#repositorio').value
+      }
+      alert(`Enviando a la base de datos el objeto con id = ${proyecto.id}`)
+      console.log(`Enviando a la base de datos el objeto con id = ${proyecto.id}`, proyectoEditado)
+    }
   }
 }
