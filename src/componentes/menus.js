@@ -73,7 +73,8 @@ const menuUsuario = {
           <a 
             class="dropdown-item" 
             href="#"
-            data-bs-toggle="modal"     data-bs-target="#modalEditarPerfil"
+            data-bs-toggle="modal"
+            data-bs-target="#modalEditarPerfil"
             >
             Mi perfil
           </a>

@@ -1,5 +1,6 @@
 import { proyectos, perfiles } from '../bd/datosPrueba'
 import { ls } from '../componentes/funciones'
+import { editarImagenPerfil } from '../componentes/editarImagenPerfil'
 
 export default {
   template: // html
@@ -64,6 +65,7 @@ export default {
 
   </div>
 </div>
+ ${editarImagenPerfil.template} 
   `,
   script: () => {
     // Capturamos los datos del usuario logueado
@@ -246,7 +248,14 @@ export default {
                         background-position: center;
                       "
                     >
-                      <i class="btn btn-success btn-sm rounded-circle bi bi-pencil"></i>
+                      <i
+                        data-id = "${usuario.user_id}" 
+                        data-urlavatar="${usuario.avatar}" 
+                        data-urlinputavatar = "urlImagen_${usuario.user_id}"
+                        class="btn btn-success btn-sm rounded-circle bi bi-pencil botonEditarImagen"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalEditarImagenPerfil"></i
+                      >
                     </div>
                   </div>
                 </td>
@@ -387,7 +396,7 @@ export default {
       pintaProyectos(datosProyectos)
       pintaUsuarios(datosUsuarios)
     })
-
+    // ******************* PARA el TAB de PROYECTOS **********
     // *** BOTONES DE EDICIÓN Y BORRADO DE PROYECTOS ***
     // Detectamos clic sobre main (Usamos delegación de eventos porque la tabla y tarjetas se actualizan constantemente en el DOM)
     document.querySelector('main').addEventListener('click', (event) => {
@@ -402,12 +411,48 @@ export default {
 
           // Cargamos la vista para editar proyecto pasandole como parámetro el id
           window.location = `#/proyectoEditar/${id}`
-        } else if (boton.classList.contains('botonBorrar')) {
+        }
+        if (boton.classList.contains('botonBorrar')) {
           // Si se trata de borrar
           console.log('Borrar proyecto ' + id)
 
           // *** AQUÍ VA LA FUNCIÓN QUE BORRA DE LA BASE DE DATOS EL PROYECTO CORRESPONDIENTE AL ID ***
         }
+      }
+    })
+
+    // *************** PARA EL TAB DE USUARIOS ********
+    // Gestión de click sobre el formulario
+    document.querySelector('.formulario').addEventListener('click', (e) => {
+      console.log('click en envialr')
+      e.preventDefault()
+      e.stopPropagation()
+      // Función actualizar datos modificados
+      if (e.target.classList.contains('botonActualizar') && formulario.checkValidity()) {
+        const id = e.target.dataset.id
+        enviaDatos(id)
+      } else {
+        formulario.classList.add('was-validated')
+      }
+
+      // Borrar registro
+      if (e.target.classList.contains('botonEliminar')) {
+        const tr = e.target.parentNode.parentNode
+        console.log(tr)
+        // ocultar tr
+        tr.classList.add('d-none')
+        const id = e.target.dataset.id
+
+        borrarUsuario(id)
+      }
+      // Editar imagen avatar
+      if (e.target.classList.contains('botonEditarImagen')) {
+        // Abrimos ventana de edición de perfil
+        const urlAvatar = e.target.dataset.urlavatar
+        const urlInputAvatar = e.target.dataset.urlinputavatar
+        const id = e.target.dataset.id
+        console.log('editarImagen ' + urlAvatar)
+        editarImagenPerfil.script(urlAvatar, urlInputAvatar, id)
       }
     })
 
@@ -423,29 +468,6 @@ export default {
       }
     })
 
-    // Detectamos enviar datos
-    document.querySelector('.formulario').addEventListener('click', (e) => {
-      console.log('click en envialr')
-      e.preventDefault()
-      e.stopPropagation()
-      if (e.target.classList.contains('botonActualizar') && formulario.checkValidity()) {
-        const id = e.target.dataset.id
-        enviaDatos(id)
-      } else {
-        formulario.classList.add('was-validated')
-      }
-
-      // Borrar registro
-      if (e.target.classList.contains('botonEliminar')) {
-        const tr = e.target.parentNode.parentNode
-        console.log(tr);
-        //ocultar tr
-        tr.classList.add('d-none')
-        const id = e.target.dataset.id
-
-        borrarUsuario(id)
-      }
-    })
     // Función para enviar datos a la base de datos
     function enviaDatos (id) {
       // capturamos los datos del tr correspondiente al botón pulsado

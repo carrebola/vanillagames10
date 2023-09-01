@@ -345,7 +345,10 @@ export default {
 
     // *** BOTONES DE EDICIÓN Y BORRADO DE PROYECTOS ***
     // Detectamos clic sobre main (Usamos delegación de eventos porque la tabla y tarjetas se actualizan constantemente en el DOM)
+    
+
     document.querySelector('main').addEventListener('click', (event) => {
+      let id = ''
       // Si hemos pulsado sobre uno de los botones
       if (event.target.classList.contains('botonAdmin')) {
         const boton = event.target
@@ -359,15 +362,11 @@ export default {
           window.location = `#/proyectoEditar/${id}`
         } else if (boton.classList.contains('botonBorrar')) {
           // Si se trata de borrar
-          console.log('Borrar proyecto ' + id)
+          alert('Borrar proyecto ' + id)
 
           // *** AQUÍ VA LA FUNCIÓN QUE BORRA DE LA BASE DE DATOS EL PROYECTO CORRESPONDIENTE AL ID ***
         }
       }
-    })
-
-    document.querySelector('main').addEventListener('click', (event) => {
-      let id = ''
       // Si hacemos clic sobre cualquier zona de una celda
       if (event.target.tagName === 'TD') {
         console.log('clic en td')

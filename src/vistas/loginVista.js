@@ -16,7 +16,7 @@ export default {
       <div class="invalid-feedback">El formato del email no es correcto</div>
       <!-- Contraseña -->
       <label for="pass" class="form-label mt-3">Contraseña:</label>
-      <input id="password" name="password" required minlength="6" type="password" class="form-control" />
+      <input value="123456" id="password" name="password" required minlength="6" type="password" class="form-control" />
       <div class="invalid-feedback">
         La contraseña debe tener como mínimo 6 caracteres
       </div>
@@ -79,23 +79,30 @@ export default {
 
       // buscamos el indice del email en el array perfiles
       const indexUser = perfiles.findIndex((user) => user.email === email) // 1
-
-      if (perfiles[indexUser].contraseña === pass) {
-        console.log('¡login correcto!')
-        const usuario = {
-          email: perfiles[indexUser].email,
-          rol: perfiles[indexUser].rol,
-          avatar: perfiles[indexUser].avatar,
-          user_id: perfiles[indexUser].user_id
+      // Si encuentra un usuario
+      if (indexUser > 0) {
+        // Si la contraseña es correcta
+        if (perfiles[indexUser].contraseña === pass) {
+          console.log('¡login correcto!')
+          const usuario = {
+            email: perfiles[indexUser].email,
+            rol: perfiles[indexUser].rol,
+            avatar: perfiles[indexUser].avatar,
+            user_id: perfiles[indexUser].user_id
+          }
+          // Guardamos datos de usaurio en localstorage
+          ls.setUsuario(usuario)
+          // Cargamos página home
+          window.location = '#/proyectos'
+          // Actualizamos el header para que se muestren los menús que corresponden al rol
+          header.script()
+        } else {
+          console.log('La contraseña no corresponde')
+          alert('El usuario no existe o la contraseña no es correcta')
         }
-        // Guardamos datos de usaurio en localstorage
-        ls.setUsuario(usuario)
-        // Cargamos página home
-        window.location = '#/proyectos'
-        // Actualizamos el header para que se muestren los menús que corresponden al rol
-        header.script()
-      } else {
-        console.log('El usuario no existe o la contraseña no corresponde')
+      }else{
+        console.log('El usuario no existe')
+        alert('El usuario no existe o la contraseña no es correcta')
       }
     }
   }

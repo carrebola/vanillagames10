@@ -101,7 +101,7 @@ export default {
           id="subirProyecto"
           type="submit"
           class="btn btn-success mt-3"
-          value="Subir proyecto"
+          value="Actualizar proyecto"
         />
       </div>
     </div>
@@ -131,7 +131,14 @@ export default {
     document.querySelector('#botonVolver').addEventListener('click', () => {
       window.history.back()
     })
-    
+
+    // Actualización de la imagen a partir de la urlImagen
+    const inputUrl = document.querySelector('#urlImagen')
+    inputUrl.addEventListener('input', () => {
+      const imagen = document.querySelector('#imagenJuego')
+      imagen.setAttribute('src', inputUrl.value)
+    })
+
     // Validación bootstrap
     // Capturamos el formulario en una variable
     const formulario = document.querySelector('#formulario')

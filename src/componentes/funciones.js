@@ -2,16 +2,20 @@
 export const ls = {
   // Captuar datos de localStorage
   getUsuario: () => {
-    // Leer en localStorage
-    const usuarioJSON = localStorage.getItem('usuarioVanilla')
-    // Convertir a objeto si existe
-    try {
-      const usuario = JSON.parse(usuarioJSON)
-      return usuario
-    } catch (error) { // Si no tenemos un objeto con el formato correcto devolvemos objeto vacío.
-      return {}
+    // Definimos usuario anónimo por si no hay datos en localstorage
+    let usuario = {
+      email: 'anónimo',
+      rol: 'no logueado',
+      avatar: ''
     }
-    // Devolvemos objeto
+    // Capturamos datos de localstorage
+    const usuarioJSON = localStorage.getItem('usuarioVanilla')
+    // Si hay un usuario logueado actualizamos usuario, sino devolvemos usuario anónimo
+    if (usuarioJSON) {
+      // Parseamos datos de localstorage
+      usuario = JSON.parse(usuarioJSON)
+    }
+    return usuario
   },
   setUsuario: (usuario) => {
     // Convertir el objeto a una cadena JSON
