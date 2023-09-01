@@ -1,3 +1,4 @@
+import { ls } from "./funciones"
 export const editarPerfil = {
   template: // html
   `
@@ -31,7 +32,7 @@ export const editarPerfil = {
                   <div
                     class="imagen mx-auto mb-1 rounded-circle"
                     style="
-                      background-image: url(./images/avatar.svg);
+                      background-image: url(${ls.getUsuario().avatar});
                       width: 200px;
                       height: 200px;
                       background-size: cover;
@@ -45,7 +46,7 @@ export const editarPerfil = {
                     id="imagen"
                     type="url"
                     class="form-control"
-                    value="http://imagenavatar.png"
+                    value="${ls.getUsuario().avatar}"
                   />
                   <div class="invalid-feedback">La url no es correcta</div>
                 </div>
@@ -53,19 +54,19 @@ export const editarPerfil = {
                 <div class="">
                   <!-- Nombre -->
                   <label for="nombre" class="form-label">Nombre:</label>
-                  <input required id="nombre" type="text" class="form-control" />
+                  <input required id="nombre" type="text" class="form-control" value="${ls.getUsuario().nombre}" />
                   <div class="invalid-feedback">El nombre es requerido</div>
                   <!-- Apellidos -->
                   <label for="apellidos" class="form-label">Apellidos:</label>
-                  <input id="apellidos" type="text" class="form-control" />
+                  <input id="apellidos" type="text" class="form-control" value = "${ls.getUsuario().apellidos}" />
 
                   <!-- Email -->
                   <label for="email" class="form-label">Email:</label>
-                  <input required id="email" type="email" class="form-control" />
+                  <input required id="email" type="email" class="form-control" value = "${ls.getUsuario().email}" />
                   <div class="invalid-feedback">El formato no es correcto</div>
 
                   <!-- Contraseña -->
-                  <label for="pass" class="form-label mt-3">Contraseña:</label>
+                  <label for="pass" class="form-label mt-3">Nueva contraseña:</label>
                   <input
                     required
                     minlength="6"
@@ -84,7 +85,7 @@ export const editarPerfil = {
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               Cancelar
             </button>
-            <button type="button" class="btn btn-primary">Guardar cambios</button>
+            <button id="enviarPerfilEditado" data-id = ${ls.getUsuario().user_id} type="button" class="btn btn-primary">Guardar cambios</button>
           </div>
         </div>
       </div>
@@ -93,5 +94,11 @@ export const editarPerfil = {
   `,
   script: () => {
     console.log('modal editar perfil cargado')
+    // Enviar datos
+    document.querySelector('#enviarPerfilEditado').addEventListener('click', (e) => {
+      e.preventDefault()
+      const userId = e.target.data.user_id
+      alert('actualizando datos de perfil ', userId)
+    })
   }
 }
