@@ -55,6 +55,8 @@ export const header = {
     console.log('Header cargado')
     // Cargamos la ventana modal para editar perfil
     document.querySelector('#modal').innerHTML = editarPerfil.template
+    // Y ejecutamos su lógica
+    editarPerfil.script()
     const rolUsuario = ls.getUsuario().rol
     switch (rolUsuario) {
       case 'registrado':

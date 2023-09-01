@@ -1,4 +1,5 @@
 import { proyectos } from '../bd/datosPrueba'
+
 export default {
   template: // html
   `

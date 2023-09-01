@@ -195,7 +195,7 @@ export default {
       let tablaUsuarios = // html
       `
       <!-- tabla usuarios-->
-      <form  action="" class="form formulario" novalidate>
+      <form id="formAdminUsuarios" action="" class="form" novalidate>
         <table
         class="table table-hover align-middle mt-3"
         style="min-width: 1200px"
@@ -422,12 +422,15 @@ export default {
     })
 
     // *************** PARA EL TAB DE USUARIOS ********
-    // Gestión de click sobre el formulario
-    document.querySelector('.formulario').addEventListener('click', (e) => {
-      console.log('click en envialr')
+
+    // Capturamos el formulario para edición de usuarios
+    const formulario = document.querySelector('#formAdminUsuarios')
+    // Gestión de click sobre botones dentro del formulario
+    formulario.addEventListener('click', (e) => {
       e.preventDefault()
       e.stopPropagation()
-      // Función actualizar datos modificados
+
+      // Si hacemos click sobre el botonActualizar
       if (e.target.classList.contains('botonActualizar') && formulario.checkValidity()) {
         const id = e.target.dataset.id
         enviaDatos(id)
@@ -435,31 +438,28 @@ export default {
         formulario.classList.add('was-validated')
       }
 
-      // Borrar registro
+      // Si hacemos click sobre Borrar registro
       if (e.target.classList.contains('botonEliminar')) {
         const tr = e.target.parentNode.parentNode
-        console.log(tr)
         // ocultar tr
         tr.classList.add('d-none')
         const id = e.target.dataset.id
-
         borrarUsuario(id)
       }
-      // Editar imagen avatar
+
+      // Si hacemos click sobre Editar imagen avatar
       if (e.target.classList.contains('botonEditarImagen')) {
-        // Abrimos ventana de edición de perfil
+        // Capturamos datos para enviar al modal
         const urlAvatar = e.target.dataset.urlavatar
         const urlInputAvatar = e.target.dataset.urlinputavatar
         const id = e.target.dataset.id
-        console.log('editarImagen ' + urlAvatar)
+        // Abrimos ventana de edición de perfil (del componente editarImagenPerfil)
         editarImagenPerfil.script(urlAvatar, urlInputAvatar, id)
       }
     })
 
     // *** VALIDACION DE FORMULARIOS CON BOOTSTRAP ***
-    const formulario = document.querySelector('.formulario')
     formulario.addEventListener('change', (e) => {
-      e.preventDefault()
       // Comprobamos si el formulario no valida
       if (!formulario.checkValidity()) {
         console.log('No valida')
@@ -471,7 +471,6 @@ export default {
     // Función para enviar datos a la base de datos
     function enviaDatos (id) {
       // capturamos los datos del tr correspondiente al botón pulsado
-      console.log(id)
       const proyectoEditado = {
         imagen: document.querySelector('#urlImagen_' + id).value,
         nombre: document.querySelector('#nombreUsuario_' + id).value,
@@ -482,7 +481,7 @@ export default {
       alert(`Enviando a la base de datos el objeto con id = ${usuario.user_id}`)
       console.log(`Enviando a la base de datos el objeto con id = ${usuario.user_id}`, proyectoEditado)
     }
-
+    // Función para borrar registro de la base de datos
     function borrarUsuario (id) {
       alert('Borrando usuario ' + id)
     }

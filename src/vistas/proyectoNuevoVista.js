@@ -23,7 +23,7 @@ export default {
     </div>
     <div class="col-12 col-md-8">
       <!-- Formulario nuevo proyecto -->
-      <form id="formulario" action="" class="form" novalidate>
+      <form id="formularioNuevoProyecto" action="" class="form" novalidate>
         <!-- Nombre proyecto -->
         <label class="form-label" for="nombreJuego"><strong>Nombre: </strong></label>
         <input
@@ -107,21 +107,20 @@ export default {
     })
 
     // Validación bootstrap
-
     // Capturamos el formulario en una variable
-    const formulario = document.querySelector('#formulario')
+    const formulario = document.querySelector('#formularioNuevoPRoyecto')
     // Detectamos su evento submit (enviar)
     formulario.addEventListener('submit', (event) => {
-    // Comprobamos si el formulario no valida
-      if (!formulario.checkValidity()) {
       // Detenemos el evento enviar (submit)
-        event.preventDefault()
-        event.stopPropagation()
+      event.preventDefault()
+      event.stopPropagation()
+      // Comprobamos si el formulario no valida
+      if (!formulario.checkValidity()) {
+      // Y añadimos la clase 'was-validate' para que se muestren los mensajes
+        formulario.classList.add('was-validated')
       } else {
         enviaDatos()
       }
-      // Y añadimos la clase 'was-validate' para que se muestren los mensajes
-      formulario.classList.add('was-validated')
     })
 
     // Función para enviar datos a la base de datos

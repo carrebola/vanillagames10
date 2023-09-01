@@ -1,4 +1,5 @@
 import { proyectos } from '../bd/datosPrueba'
+
 export default {
   template: // html
   `
@@ -9,7 +10,7 @@ export default {
       Volver</bottom
     >
   </div>
-  <form novalidate id="formulario" action="" class="">
+  <form novalidate id="formularioEditarProyecto" action="" class="form">
     <div class="row mt-2">
       <div class="col-12 col-md-4 pt-2 mb-3">
         <img id="imagenJuego" src="/assets/images/juego.jpg" alt="" class="img-fluid" />
@@ -109,19 +110,20 @@ export default {
 </div>
   `,
   script: (id) => {
-    console.log('Vista proyectoEditarDetalle cargada')
-    console.log(proyectos, id)
-
     // Simulamos la consulta a un proyecto por id
     const proyectoArray = proyectos.filter(p => p.id == id)
     const proyecto = proyectoArray[0]
+
+    // Transformamos la fecha en un formato yy-mm-dd
+    const fecha = proyecto.created_at
+    const fechaCorta = fecha.split('T')[0]
+
+    // Insertamos los datos en el formulario
     document.querySelector('#imagenJuego').setAttribute('src', proyecto.imagen)
     document.querySelector('#urlImagen').value = proyecto.imagen
     document.querySelector('#nombreJuego').value = proyecto.nombre
     document.querySelector('#descripcion').value = proyecto.descripcion
     document.querySelector('#estado').value = proyecto.estado
-    const fecha = proyecto.created_at
-    const fechaCorta = fecha.split('T')[0]
     document.querySelector('#fecha').value = fechaCorta
     console.log(fechaCorta)
     document.querySelector('#enlace').value = proyecto.enlace
@@ -133,31 +135,31 @@ export default {
     })
 
     // Actualización de la imagen a partir de la urlImagen
+    // Capturamos input
     const inputUrl = document.querySelector('#urlImagen')
+    // Detectamos cambios en su value
     inputUrl.addEventListener('input', () => {
       const imagen = document.querySelector('#imagenJuego')
+      // Actualizamos el atributo src y por lo tanto la imagen
       imagen.setAttribute('src', inputUrl.value)
     })
 
-    // Validación bootstrap
+    // Validación BOOTSTRAP
     // Capturamos el formulario en una variable
-    const formulario = document.querySelector('#formulario')
+    const formulario = document.querySelector('#formularioEditarProyecto')
     // Detectamos su evento submit (enviar)
     formulario.addEventListener('submit', (event) => {
-    // Comprobamos si el formulario no valida
-      if (!formulario.checkValidity()) {
       // Detenemos el evento enviar (submit)
-        event.preventDefault()
-        event.stopPropagation()
-
-        //* ** ENVIAMOS DATOS A LA BASE DE DATOS */
+      event.preventDefault()
+      event.stopPropagation()
+      // Comprobamos si el formulario no valida
+      if (!formulario.checkValidity()) {
+        // Y añadimos la clase 'was-validate' para que se muestren los mensajes
+        formulario.classList.add('was-validated')
       } else {
         //* ** ENVIAMOS DATOS A LA BASE DE DATOS */
         enviaDatos()
       }
-
-      // Y añadimos la clase 'was-validate' para que se muestren los mensajes
-      formulario.classList.add('was-validated')
     })
 
     // Función para enviar datos a la base de datos
