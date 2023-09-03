@@ -1,5 +1,5 @@
-import { p as proyectos } from "./datosPrueba-711876d0.js";
-import { l as ls } from "./main-0c2eb246.js";
+import { p as proyectos } from "./datosPrueba-37b84085.js";
+import { l as ls } from "./main-c79b88c3.js";
 const proyectosVista = {
   template: (
     // html

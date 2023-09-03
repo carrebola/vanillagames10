@@ -360,7 +360,7 @@ const header = {
   <div class="container">
     <a class="navbar-brand router-link" href="#/home"
       ><img
-        src="/images/logo.svg"
+        src="images/logo.svg"
         alt=""
         width="30"
         height="24"
@@ -522,14 +522,14 @@ const enrutador = {
   rutas: {
     home: __vitePreload(() => import("./homeVista-953e6b39.js"), true ? [] : void 0, import.meta.url),
     // Usuarios
-    admin: __vitePreload(() => import("./adminVista-e9671ddc.js"), true ? ["./adminVista-e9671ddc.js","./datosPrueba-711876d0.js"] : void 0, import.meta.url),
+    admin: __vitePreload(() => import("./adminVista-5bb5e551.js"), true ? ["./adminVista-5bb5e551.js","./datosPrueba-37b84085.js"] : void 0, import.meta.url),
     registro: __vitePreload(() => import("./registroVista-21b1366c.js"), true ? [] : void 0, import.meta.url),
-    login: __vitePreload(() => import("./loginVista-7153646f.js"), true ? ["./loginVista-7153646f.js","./datosPrueba-711876d0.js"] : void 0, import.meta.url),
+    login: __vitePreload(() => import("./loginVista-5bbf15a8.js"), true ? ["./loginVista-5bbf15a8.js","./datosPrueba-37b84085.js"] : void 0, import.meta.url),
     // Proyectos
-    proyectos: __vitePreload(() => import("./proyectosVista-9458f6ca.js"), true ? ["./proyectosVista-9458f6ca.js","./datosPrueba-711876d0.js"] : void 0, import.meta.url),
+    proyectos: __vitePreload(() => import("./proyectosVista-395353a2.js"), true ? ["./proyectosVista-395353a2.js","./datosPrueba-37b84085.js"] : void 0, import.meta.url),
     proyectoNuevo: __vitePreload(() => import("./proyectoNuevoVista-506af670.js"), true ? [] : void 0, import.meta.url),
-    proyectoEditar: __vitePreload(() => import("./proyectoEditarVista-7e53c607.js"), true ? ["./proyectoEditarVista-7e53c607.js","./datosPrueba-711876d0.js"] : void 0, import.meta.url),
-    proyectoDetalle: __vitePreload(() => import("./proyectoDetalleVista-045b93ef.js"), true ? ["./proyectoDetalleVista-045b93ef.js","./datosPrueba-711876d0.js"] : void 0, import.meta.url),
+    proyectoEditar: __vitePreload(() => import("./proyectoEditarVista-c25862e8.js"), true ? ["./proyectoEditarVista-c25862e8.js","./datosPrueba-37b84085.js"] : void 0, import.meta.url),
+    proyectoDetalle: __vitePreload(() => import("./proyectoDetalleVista-3fdf886a.js"), true ? ["./proyectoDetalleVista-3fdf886a.js","./datosPrueba-37b84085.js"] : void 0, import.meta.url),
     404: __vitePreload(() => import("./404-16a751c4.js"), true ? [] : void 0, import.meta.url)
   },
   // Método que obtiene la ruta del navegador

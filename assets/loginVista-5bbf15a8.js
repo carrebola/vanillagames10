@@ -1,5 +1,5 @@
-import { a as perfiles } from "./datosPrueba-711876d0.js";
-import { l as ls, h as header } from "./main-0c2eb246.js";
+import { a as perfiles } from "./datosPrueba-37b84085.js";
+import { l as ls, h as header } from "./main-c79b88c3.js";
 const loginVista = {
   template: (
     // html
