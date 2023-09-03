@@ -113,6 +113,9 @@ export default {
 
     // Capturamos proyectos y guardamos en variable para poder ser filtrada
     const datos = proyectos
+    let misProyectos = false
+    // Capturamos los datos del usuario logueado
+    const usuario = ls.getUsuario()
 
     // ####################################################################
     // *** FUNCIÓN PARA PINTAR TABLA A PARTIR DE ARRAY datos ***
@@ -336,9 +339,6 @@ export default {
     // Vista 'Todos los proyectos' / 'Mis proyectos'
     // ####################################################################
 
-    // Definimos que por defecto se muestran 'mis proyectos'
-    let misProyectos = false
-
     // *** Detectamos si se cambia de proyectos a mis proyectos al hacer click en las pestañas ***
     document.querySelector('.nav-tabs').addEventListener('click', (event) => {
       // Si click en 'Mis proyectos' cambiamos pestaña activa
@@ -399,8 +399,6 @@ export default {
     // Mostrar/ocultar botón 'subir proyecto'
     // ####################################################################
 
-    // Capturamos los datos del usuario logueado
-    const usuario = ls.getUsuario()
     // Ocultamos el botón de subir proyecto si el rol es registrado
     if (usuario.rol === 'registrado') {
       document.querySelector('#botonSubirProyecto').classList.add('disabled')
