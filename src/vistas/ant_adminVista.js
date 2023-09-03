@@ -76,7 +76,7 @@ export default {
         <tr>
           <td>
             <div class="containerImagen">
-              <img width="200px" src="/assets/images/juego.jpg" alt="" />
+              <img width="200px" src="images/juego.jpg" alt="" />
             </div>
           </td>
           <td>Proyecto ejemplo 1</td>
@@ -92,7 +92,7 @@ export default {
         <tr>
           <td>
             <div class="containerImagen">
-              <img width="200px" src="./images/juego.jpg" alt="" />
+              <img width="200px" src=".images/juego.jpg" alt="" />
             </div>
           </td>
           <td>Proyecto ejemplo 1</td>
@@ -108,7 +108,7 @@ export default {
         <tr>
           <td>
             <div class="containerImagen">
-              <img width="200px" src="./images/juego.jpg" alt="" />
+              <img width="200px" src=".images/juego.jpg" alt="" />
             </div>
           </td>
           <td>Proyecto ejemplo 1</td>

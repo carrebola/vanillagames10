@@ -59,7 +59,7 @@ const menuUsuario = {
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        <img id="avatarMenu" src="/assets/images/avatar.svg" alt="" width="25" />
+        <img id="avatarMenu" src="images/avatar.svg" alt="" width="25" />
       </a>
       <ul class="dropdown-menu me-0" style="left: -100px; width: 100px">
         <li id="emailUserMenu" class="text-light text-end p-2 small">
@@ -96,7 +96,7 @@ const menuUsuario = {
     data-bs-toggle="dropdown"
     aria-expanded="false"
     >
-      <img id="avatarMenu" src="/assets/images/avatar.svg" alt="" width="25" />
+      <img id="avatarMenu" src="images/avatar.svg" alt="" width="25" />
     </a>
       <ul class="dropdown-menu me-0" style="left: -100px; width: 100px">
         <li id="emailUserMenu" class="text-light text-end p-2 small">
@@ -133,7 +133,7 @@ const menuUsuario = {
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        <img id="avatarMenu" src="/assets/images/avatar.svg" alt="" width="25" />
+        <img id="avatarMenu" src="images/avatar.svg" alt="" width="25" />
       </a>
       <ul class="dropdown-menu me-0" style="left: -100px; width: 100px">
         <li id="emailUserMenu" class="text-light text-end p-2 small">

@@ -10,7 +10,7 @@ export const header = {
   <div class="container">
     <a class="navbar-brand router-link" href="#/home"
       ><img
-        src="/assets/images/logo.svg"
+        src="images/logo.svg"
         alt=""
         width="30"
         height="24"
@@ -91,7 +91,7 @@ export const header = {
       document.querySelector('#emailUserMenu').innerHTML = ls.getUsuario().email
       document.querySelector('#rolUserMenu').innerHTML = ls.getUsuario().rol
       // para la imagen de avatar (avatar.png si el campo está vacío)
-      const imagen = ls.getUsuario().avatar === '' ? '/assets/images/avatar.svg' : ls.getUsuario().avatar
+      const imagen = ls.getUsuario().avatar === '' ? 'images/avatar.svg' : ls.getUsuario().avatar
       document.querySelector('#avatarMenu').setAttribute('src', imagen)
     } catch (error) {
       console.log('El usuario no está registrado y no tiene menú de usuario')

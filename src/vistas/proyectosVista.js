@@ -155,7 +155,7 @@ export default {
                 class="verDetalle"
                 data-id="${proyecto.id}"
                 width="200px" 
-                src=${proyecto.imagen || '/assets/images/imagenVacia.png'} 
+                src=${proyecto.imagen || 'images/imagenVacia.png'} 
                 alt="imagen proyecto" />
             </div>
           </td>
@@ -216,7 +216,7 @@ export default {
                 class="col-4 verDetalle"
                 data-id="${proyecto.id}"
                 style="
-                  background-image: url(${proyecto.imagen || '/assets/images/imagenVacia.png'});
+                  background-image: url(${proyecto.imagen || 'images/imagenVacia.png'});
                   background-position: center;
                   background-size: cover;
                 "

@@ -12,7 +12,7 @@ export default {
   
   <div class="row mt-2">
     <div class="col-12 col-md-4 mb-3">
-      <img id="imagenJuego" src="/assets/images/juego.jpg" alt="" class="img-fluid">
+      <img id="imagenJuego" src="images/juego.jpg" alt="" class="img-fluid">
     </div>
     <div class="col-12 col-md-8">
       <p>
@@ -64,7 +64,7 @@ export default {
 
     // Añadimos el id en data-id al botón editar para que al detectar el click podamos llamar a la vista de edición pasandole el id en cuestión
     document.querySelector('#botonEditarDetalle').setAttribute('data-id', proyecto.id)
-    
+
     // Boton volver atras
     document.querySelector('#botonVolver').addEventListener('click', () => {
       window.history.back()

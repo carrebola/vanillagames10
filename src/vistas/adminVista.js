@@ -163,7 +163,7 @@ export default {
             <div class="containerImagen">
               <img 
                 width="200px" 
-                src=${proyecto.imagen || '/assets/images/imagenVacia.png'} 
+                src=${proyecto.imagen || 'images/imagenVacia.png'} 
                 alt="imagen proyecto" />
             </div>
           </td>

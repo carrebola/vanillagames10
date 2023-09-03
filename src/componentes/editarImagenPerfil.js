@@ -33,7 +33,7 @@ export const editarImagenPerfil = {
                     id="imagenUsuario"
                     class="imagen mx-auto mb-1 rounded-circle"
                     style="
-                      background-image: url(./images/avatar.svg);
+                      background-image: url(.images/avatar.svg);
                       width: 200px;
                       height: 200px;
                       background-size: cover;
