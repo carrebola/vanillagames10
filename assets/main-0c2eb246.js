@@ -45,7 +45,7 @@ const ls = {
     let usuario = {
       email: "anónimo",
       rol: "no logueado",
-      avatar: "/assets/images/imagenVacia.png"
+      avatar: "images/imagenVacia.png"
     };
     const usuarioJSON = localStorage.getItem("usuarioVanilla");
     if (usuarioJSON) {
@@ -126,7 +126,7 @@ const menuUsuario = {
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        <img id="avatarMenu" src="/assets/images/avatar.svg" alt="" width="25" />
+        <img id="avatarMenu" src="images/avatar.svg" alt="" width="25" />
       </a>
       <ul class="dropdown-menu me-0" style="left: -100px; width: 100px">
         <li id="emailUserMenu" class="text-light text-end p-2 small">
@@ -165,7 +165,7 @@ const menuUsuario = {
     data-bs-toggle="dropdown"
     aria-expanded="false"
     >
-      <img id="avatarMenu" src="/assets/images/avatar.svg" alt="" width="25" />
+      <img id="avatarMenu" src="images/avatar.svg" alt="" width="25" />
     </a>
       <ul class="dropdown-menu me-0" style="left: -100px; width: 100px">
         <li id="emailUserMenu" class="text-light text-end p-2 small">
@@ -204,7 +204,7 @@ const menuUsuario = {
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        <img id="avatarMenu" src="/assets/images/avatar.svg" alt="" width="25" />
+        <img id="avatarMenu" src="images/avatar.svg" alt="" width="25" />
       </a>
       <ul class="dropdown-menu me-0" style="left: -100px; width: 100px">
         <li id="emailUserMenu" class="text-light text-end p-2 small">
@@ -360,7 +360,7 @@ const header = {
   <div class="container">
     <a class="navbar-brand router-link" href="#/home"
       ><img
-        src="./assets/images/logo.svg"
+        src="/images/logo.svg"
         alt=""
         width="30"
         height="24"
@@ -428,7 +428,7 @@ const header = {
     try {
       document.querySelector("#emailUserMenu").innerHTML = ls.getUsuario().email;
       document.querySelector("#rolUserMenu").innerHTML = ls.getUsuario().rol;
-      const imagen = ls.getUsuario().avatar === "" ? "/assets/images/avatar.svg" : ls.getUsuario().avatar;
+      const imagen = ls.getUsuario().avatar === "" ? "images/avatar.svg" : ls.getUsuario().avatar;
       document.querySelector("#avatarMenu").setAttribute("src", imagen);
     } catch (error) {
       console.log("El usuario no está registrado y no tiene menú de usuario");
@@ -451,7 +451,7 @@ const footer = {
   <div class="container">
     <a class="navbar-brand" href="http://www.fpllefia.com">
       <img
-        src="/assets/images/logo.svg"
+        src="images/logo.svg"
         alt="fpllefia"
         width="30"
         height="24"
@@ -520,16 +520,16 @@ const __vitePreload = function preload(baseModule, deps, importerUrl) {
 const enrutador = {
   // Objeto (diccionario) con todas las rutas y su vista asociada
   rutas: {
-    home: __vitePreload(() => import("./homeVista-37bdd10c.js"), true ? [] : void 0, import.meta.url),
+    home: __vitePreload(() => import("./homeVista-953e6b39.js"), true ? [] : void 0, import.meta.url),
     // Usuarios
-    admin: __vitePreload(() => import("./adminVista-683538ab.js"), true ? ["./adminVista-683538ab.js","./datosPrueba-711876d0.js"] : void 0, import.meta.url),
+    admin: __vitePreload(() => import("./adminVista-e9671ddc.js"), true ? ["./adminVista-e9671ddc.js","./datosPrueba-711876d0.js"] : void 0, import.meta.url),
     registro: __vitePreload(() => import("./registroVista-21b1366c.js"), true ? [] : void 0, import.meta.url),
-    login: __vitePreload(() => import("./loginVista-27b35118.js"), true ? ["./loginVista-27b35118.js","./datosPrueba-711876d0.js"] : void 0, import.meta.url),
+    login: __vitePreload(() => import("./loginVista-7153646f.js"), true ? ["./loginVista-7153646f.js","./datosPrueba-711876d0.js"] : void 0, import.meta.url),
     // Proyectos
-    proyectos: __vitePreload(() => import("./proyectosVista-a0431c53.js"), true ? ["./proyectosVista-a0431c53.js","./datosPrueba-711876d0.js"] : void 0, import.meta.url),
-    proyectoNuevo: __vitePreload(() => import("./proyectoNuevoVista-2c8a2143.js"), true ? [] : void 0, import.meta.url),
-    proyectoEditar: __vitePreload(() => import("./proyectoEditarVista-e4dab671.js"), true ? ["./proyectoEditarVista-e4dab671.js","./datosPrueba-711876d0.js"] : void 0, import.meta.url),
-    proyectoDetalle: __vitePreload(() => import("./proyectoDetalleVista-548bd694.js"), true ? ["./proyectoDetalleVista-548bd694.js","./datosPrueba-711876d0.js"] : void 0, import.meta.url),
+    proyectos: __vitePreload(() => import("./proyectosVista-9458f6ca.js"), true ? ["./proyectosVista-9458f6ca.js","./datosPrueba-711876d0.js"] : void 0, import.meta.url),
+    proyectoNuevo: __vitePreload(() => import("./proyectoNuevoVista-506af670.js"), true ? [] : void 0, import.meta.url),
+    proyectoEditar: __vitePreload(() => import("./proyectoEditarVista-7e53c607.js"), true ? ["./proyectoEditarVista-7e53c607.js","./datosPrueba-711876d0.js"] : void 0, import.meta.url),
+    proyectoDetalle: __vitePreload(() => import("./proyectoDetalleVista-045b93ef.js"), true ? ["./proyectoDetalleVista-045b93ef.js","./datosPrueba-711876d0.js"] : void 0, import.meta.url),
     404: __vitePreload(() => import("./404-16a751c4.js"), true ? [] : void 0, import.meta.url)
   },
   // Método que obtiene la ruta del navegador

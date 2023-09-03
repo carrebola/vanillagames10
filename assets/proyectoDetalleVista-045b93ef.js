@@ -12,7 +12,7 @@ const proyectoDetalleVista = {
   
   <div class="row mt-2">
     <div class="col-12 col-md-4 mb-3">
-      <img id="imagenJuego" src="/assets/images/juego.jpg" alt="" class="img-fluid">
+      <img id="imagenJuego" src="images/juego.jpg" alt="" class="img-fluid">
     </div>
     <div class="col-12 col-md-8">
       <p>

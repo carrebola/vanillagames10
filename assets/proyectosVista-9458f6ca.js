@@ -1,5 +1,5 @@
 import { p as proyectos } from "./datosPrueba-711876d0.js";
-import { l as ls } from "./main-3ae57619.js";
+import { l as ls } from "./main-0c2eb246.js";
 const proyectosVista = {
   template: (
     // html
@@ -141,7 +141,7 @@ const proyectosVista = {
                 class="verDetalle"
                 data-id="${proyecto.id}"
                 width="200px" 
-                src=${proyecto.imagen || "/assets/images/imagenVacia.png"} 
+                src=${proyecto.imagen || "images/imagenVacia.png"} 
                 alt="imagen proyecto" />
             </div>
           </td>
@@ -191,7 +191,7 @@ const proyectosVista = {
                 class="col-4 verDetalle"
                 data-id="${proyecto.id}"
                 style="
-                  background-image: url(${proyecto.imagen || "/assets/images/imagenVacia.png"});
+                  background-image: url(${proyecto.imagen || "images/imagenVacia.png"});
                   background-position: center;
                   background-size: cover;
                 "

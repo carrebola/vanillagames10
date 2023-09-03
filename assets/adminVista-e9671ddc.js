@@ -1,5 +1,5 @@
 import { p as proyectos, a as perfiles } from "./datosPrueba-711876d0.js";
-import { l as ls } from "./main-3ae57619.js";
+import { l as ls } from "./main-0c2eb246.js";
 const editarImagenPerfil = {
   template: (
     // html
@@ -239,7 +239,7 @@ const adminVista = {
             <div class="containerImagen">
               <img 
                 width="200px" 
-                src=${proyecto.imagen || "/assets/images/imagenVacia.png"} 
+                src=${proyecto.imagen || "images/imagenVacia.png"} 
                 alt="imagen proyecto" />
             </div>
           </td>
