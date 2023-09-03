@@ -6,7 +6,7 @@ const registroVista = {
   <h1 class="mt-5 text-center">Registro</h1>
   <div class="m-5 mx-auto" style="max-width: 400px">
     <!-- Formulario de registro -->
-    <form action="" class="form border shadow-sm p-3" novalidate>
+    <form id="formularioRegistro" class="form border shadow-sm p-3" novalidate>
       <!-- Nombre -->
       <label for="nombre" class="form-label">Nombre:</label>
       <input required id="nombre" type="text" class="form-control" />
