@@ -45,20 +45,26 @@ export default {
     console.log('Vista proyectoDetalle cargada')
     console.log(proyectos, id)
 
-    // Simulamos la consulta a un proyecto por id
+    // Simulamos la consulta a un proyecto por id filtrando de todos nuestros proyectos de prueba el que tiene el id que hemos recibido como parámetro
     const proyectoArray = proyectos.filter(p => p.id == id)
     const proyecto = proyectoArray[0]
+
+    // Modificamos el formato de la fecha quedandonos solo con el yy-mm-dd
+    const fecha = proyecto.created_at
+    const fechaCorta = fecha.split('T')[0]
+
+    // Inyectamos los datos en la vista
     document.querySelector('#imagenJuego').setAttribute('src', proyecto.imagen)
     document.querySelector('#nombreJuego').innerHTML = proyecto.nombre
     document.querySelector('#descripcion').innerHTML = proyecto.descripcion
     document.querySelector('#estado').innerHTML = proyecto.estado
-    const fecha = proyecto.created_at
-    const fechaCorta = fecha.split('T')[0]
     document.querySelector('#fecha').innerHTML = fechaCorta
     document.querySelector('#enlace').innerHTML = proyecto.enlace
     document.querySelector('#repositorio').innerHTML = proyecto.repositorio
 
+    // Añadimos el id en data-id al botón editar para que al detectar el click podamos llamar a la vista de edición pasandole el id en cuestión
     document.querySelector('#botonEditarDetalle').setAttribute('data-id', proyecto.id)
+    
     // Boton volver atras
     document.querySelector('#botonVolver').addEventListener('click', () => {
       window.history.back()
