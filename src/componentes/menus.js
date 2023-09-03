@@ -39,6 +39,8 @@ const menuRol = {
   <ul class="navbar-nav ms-auto me-2 mb-2 mb-lg-0">
     <li class="nav-item">
       <a class="nav-link active router-link" aria-current="page" href="#/proyectos">PROYECTOS</a>
+    </li>
+    <li>
       <a class="nav-link active router-link" aria-current="page" href="#/admin">Panel ADMIN</a>
     </li>
   </ul>
@@ -57,13 +59,50 @@ const menuUsuario = {
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        <img src="/assets/images/avatar.svg" alt="" width="25" />
+        <img id="avatarMenu" src="/assets/images/avatar.svg" alt="" width="25" />
       </a>
       <ul class="dropdown-menu me-0" style="left: -100px; width: 100px">
-        <li class="text-light text-end p-2 small">
+        <li id="emailUserMenu" class="text-light text-end p-2 small">
           ${ls.getUsuario().email}
         </li>
-        <li class="text-light text-end pe-2 small fst-italic">
+        <li id="rolUserMenu" class="text-light text-end pe-2 small fst-italic">
+          ${ls.getUsuario().rol}
+        </li>
+        <li><hr class="dropdown-divider" /></li>
+        <li>
+          <a 
+            class="dropdown-item" 
+            href="#"
+            data-bs-toggle="modal"
+            data-bs-target="#modalEditarPerfil"
+            >
+            Mi perfil
+          </a>
+        </li>
+        <li><hr class="dropdown-divider" /></li>
+        <li><a class="dropdown-item cerrarSesion" href="#">Cerrar sesión</a></li>
+      </ul>
+    </li>
+  </ul>
+  `,
+  templateDesarrollador: // html
+  `
+  <ul class="navbar-nav ms-auto me-2 mb-2 mb-lg-0">
+    <li class="nav-item dropdown">
+    <a
+    class="nav-link dropdown-toggle"
+    href="#"
+    role="button"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+    >
+      <img id="avatarMenu" src="/assets/images/avatar.svg" alt="" width="25" />
+    </a>
+      <ul class="dropdown-menu me-0" style="left: -100px; width: 100px">
+        <li id="emailUserMenu" class="text-light text-end p-2 small">
+          ${ls.getUsuario().email}
+        </li>
+        <li id="rolUserMenu" class="text-light text-end p-2 small">
           ${ls.getUsuario().rol}
         </li>
         <li><hr class="dropdown-divider" /></li>
@@ -77,43 +116,7 @@ const menuUsuario = {
           </a>
         </li>
         <li><hr class="dropdown-divider" /></li>
-        <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
-      </ul>
-    </li>
-  </ul>
-  `,
-  templateDesarrollador: // html
-  `
-  <ul class="navbar-nav ms-auto me-2 mb-2 mb-lg-0">
-    <li class="nav-item dropdown">
-      <a
-        class="nav-link dropdown-toggle"
-        href="#"
-        role="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-      >
-        <img src="/assets/images/avatar.svg" alt="" width="25" />
-      </a>
-      <ul class="dropdown-menu me-0" style="left: -100px; width: 100px">
-        <li class="text-light text-center p-2">
-          <p>${ls.getUsuario().email}</p>
-        </li>
-        <li class="text-light text-center p-2">
-          <p>${ls.getUsuario().rol}</p>
-        </li>
-        <li><hr class="dropdown-divider" /></li>
-        <li>
-          <a 
-            class="dropdown-item" 
-            href="#"
-            data-bs-toggle="modal"     data-bs-target="#modalEditarPerfil"
-            >
-            Mi perfil
-          </a>
-        </li>
-        <li><hr class="dropdown-divider" /></li>
-        <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+        <li><a class="dropdown-item cerrarSesion" href="#">Cerrar sesión</a></li>
       </ul>
     </li>
   </ul>
@@ -130,14 +133,14 @@ const menuUsuario = {
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        <img src="/assets/images/avatar.svg" alt="" width="25" />
+        <img id="avatarMenu" src="/assets/images/avatar.svg" alt="" width="25" />
       </a>
       <ul class="dropdown-menu me-0" style="left: -100px; width: 100px">
-        <li class="text-light text-center p-2">
-          <p>${ls.getUsuario().email}</p>
+        <li id="emailUserMenu" class="text-light text-end p-2 small">
+          ${ls.getUsuario().email}
         </li>
-        <li class="text-light text-center p-2">
-          <p>${ls.getUsuario().rol}</p>
+        <li id="rolUserMenu" class="text-light text-end p-2 small">
+          ${ls.getUsuario().rol}
         </li>
         <li><hr class="dropdown-divider" /></li>
         <li>
@@ -150,7 +153,7 @@ const menuUsuario = {
           </a>
         </li>
         <li><hr class="dropdown-divider" /></li>
-        <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+        <li><a class="dropdown-item cerrarSesion" href="#">Cerrar sesión</a></li>
       </ul>
     </li>
   </ul>

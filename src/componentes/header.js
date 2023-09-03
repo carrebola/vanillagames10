@@ -53,12 +53,11 @@ export const header = {
   `,
   script: () => {
     console.log('Header cargado')
-
+    // Cargamos la ventana modal para editar perfil
     document.querySelector('#modal').innerHTML = editarPerfil.template
-    // Simulamos el inicio de sesión de un usuario
-    ls.setUsuario({ email: 'chafardera@gmial.com', rol: 'registrado' })
+    // Y ejecutamos su lógica
+    editarPerfil.script()
     const rolUsuario = ls.getUsuario().rol
-
     switch (rolUsuario) {
       case 'registrado':
         // menú rol
@@ -81,8 +80,34 @@ export const header = {
       default : // Para usuarios anónimos
         // menú rol
         document.querySelector('#menuRol').innerHTML = menuRol.templateAnonimo
-        // menú usuario: No tiene
+        // menú usuario - No debe aparecer nada
+        document.querySelector('#menuUsuario').innerHTML = ''
         break
     }
+
+    // Y actualizamos los datos de menu de usuario si es que se está mostrando
+    try {
+      // email y rol
+      document.querySelector('#emailUserMenu').innerHTML = ls.getUsuario().email
+      document.querySelector('#rolUserMenu').innerHTML = ls.getUsuario().rol
+      // para la imagen de avatar (avatar.png si el campo está vacío)
+      const imagen = ls.getUsuario().avatar === '' ? '/assets/images/avatar.svg' : ls.getUsuario().avatar
+      document.querySelector('#avatarMenu').setAttribute('src', imagen)
+    } catch (error) {
+      console.log('El usuario no está registrado y no tiene menú de usuario')
+    }
+
+    // Cerrar sesión
+    // Capturamos clic sobre el item de cerrar sesión
+    document.querySelector('header').addEventListener('click', (e) => {
+      if (e.target.classList.contains('cerrarSesion')) {
+        e.preventDefault()
+        // Borramos el localstorage
+        ls.setUsuario('')
+        // Cargamos la pagina home
+        window.location = '#/home'
+        header.script()
+      }
+    })
   }
 }
