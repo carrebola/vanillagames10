@@ -1,5 +1,5 @@
 import { p as proyectos } from "./datosPrueba-711876d0.js";
-import { l as ls } from "./main-018a00dd.js";
+import { l as ls } from "./main-2f71308f.js";
 const proyectosVista = {
   template: (
     // html
@@ -111,6 +111,8 @@ const proyectosVista = {
   ),
   script: () => {
     const datos = proyectos;
+    let misProyectos = false;
+    const usuario = ls.getUsuario();
     const pintaTabla = (proyectosFiltrados) => {
       if (misProyectos) {
         proyectosFiltrados = datos.filter((proyecto) => proyecto.user_id === usuario.user_id);
@@ -255,7 +257,6 @@ const proyectosVista = {
       pintaTabla(datos);
       pintaTarjetas(datos);
     });
-    let misProyectos = false;
     document.querySelector(".nav-tabs").addEventListener("click", (event) => {
       if (event.target.classList.contains("fichaMisProyectos")) {
         document.querySelector(".fichaMisProyectos").classList.add("active");
@@ -291,7 +292,6 @@ const proyectosVista = {
         window.location = `#/proyectoDetalle/${id}`;
       }
     });
-    const usuario = ls.getUsuario();
     if (usuario.rol === "registrado") {
       document.querySelector("#botonSubirProyecto").classList.add("disabled");
     }
