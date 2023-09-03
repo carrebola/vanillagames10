@@ -33,7 +33,7 @@ export default {
     <div class="row">
       <div class="col-12 col-sm-4 mb-3">
       <!-- Boton para subir proyectos -->
-        <a id="botonSubirProyecto" href="#/proyectoNuevo" class="btn btn-primary w-100">Subir proyecto</a>
+        <a id="botonSubirProyecto" href="#/proyectoNuevo" class="btn btn-primary w-100 router-link">Subir proyecto</a>
       </div>
       <div class="d-flex col-12 col-sm-8 mb-3">
         <!-- Botones para alternar entre vista de tabla o de tarjetas -->
@@ -109,40 +109,15 @@ export default {
 </div>
   `,
   script: () => {
-    // Capturamos los datos del usuario logueado
-    const usuario = ls.getUsuario()
-    // Ocultamos el botón de subir proyecto si el rol es registrado
-    if (usuario.rol === 'registrado') {
-      document.querySelector('#botonSubirProyecto').classList.add('disabled')
-    }
-
     // **** AQUI DEBEMOS CAPTURAR LOS PROYECTOS DE LA BASE DE DATOS ****
 
     // Capturamos proyectos y guardamos en variable para poder ser filtrada
     const datos = proyectos
 
-    // Definimos que por defecto se muestran 'mis proyectos'
-    let misProyectos = false
-
-    // *** Detectamos si se cambia de proyectos a mis proyectos al hacer click en las pestañas ***
-    document.querySelector('.nav-tabs').addEventListener('click', (event) => {
-      // Si click en 'Mis proyectos' cambiamos pestaña activa
-      if (event.target.classList.contains('fichaMisProyectos')) {
-        document.querySelector('.fichaMisProyectos').classList.add('active')
-        document.querySelector('.fichaProyectos').classList.remove('active')
-        misProyectos = true
-      } else {
-        // Si click en 'Todos los proyectos' cambiamos pestaña activa
-        document.querySelector('.fichaProyectos').classList.add('active')
-        document.querySelector('.fichaMisProyectos').classList.remove('active')
-        misProyectos = false
-      }
-      // Actualizamos los datos en el panel central
-      pintaTabla(datos)
-      pintaTarjetas(datos)
-    })
-
+    // ####################################################################
     // *** FUNCIÓN PARA PINTAR TABLA A PARTIR DE ARRAY datos ***
+    // ####################################################################
+
     const pintaTabla = (proyectosFiltrados) => {
       // Si tenemos seleccionada la opción 'mis proyectos' filtramos los proyectos por user_id
       if (misProyectos) {
@@ -199,7 +174,10 @@ export default {
       document.querySelector('#tbodyProyectos').innerHTML = tbodyProyectos
     }
 
+    // ####################################################################
     // Función para pintar tarjetas
+    // ####################################################################
+
     const pintaTarjetas = (proyectosFiltrados) => {
       // Si tenemos seleccionada la opción 'mis proyectos' filtramos los proyectos por user_id
       if (misProyectos) {
@@ -268,7 +246,10 @@ export default {
     pintaTabla(datos)
     pintaTarjetas(datos)
 
+    // ####################################################################
     // *** SELECCIÓN DE VISTA EN FORMATO TABLA O TARJETAS ***
+    // ####################################################################
+
     // Selección vista tabla
     document.querySelector('.vistaTabla').addEventListener('click', (boton) => {
       // Lineas originales del html para los tabs:
@@ -305,7 +286,10 @@ export default {
       document.querySelector('#tabTarjetas').setAttribute('class', 'row')
     })
 
+    // ####################################################################
     // *** FILTRO PARA BUSCADOR ***
+    // ####################################################################
+
     // Capturamos el input de búsqueda
     const inputBusqueda = document.getElementById('inputBusqueda')
 
@@ -334,7 +318,10 @@ export default {
       pintaTarjetas(proyectosFiltrados)
     })
 
-    // Borrar datos del input del buscador
+    // ####################################################################
+    // Borrar datos del input del buscador al hacer click en 'x'
+    // ####################################################################
+
     document.querySelector('#borrarBuscador').addEventListener('click', () => {
       // Borramos contenido del buscador
       inputBusqueda.value = ''
@@ -345,12 +332,39 @@ export default {
       pintaTarjetas(datos)
     })
 
-    // *** BOTONES DE EDICIÓN Y BORRADO DE PROYECTOS ***
-    // Detectamos clic sobre main (Usamos delegación de eventos porque la tabla y tarjetas se actualizan constantemente en el DOM)
+    // ####################################################################
+    // Vista 'Todos los proyectos' / 'Mis proyectos'
+    // ####################################################################
 
+    // Definimos que por defecto se muestran 'mis proyectos'
+    let misProyectos = false
+
+    // *** Detectamos si se cambia de proyectos a mis proyectos al hacer click en las pestañas ***
+    document.querySelector('.nav-tabs').addEventListener('click', (event) => {
+      // Si click en 'Mis proyectos' cambiamos pestaña activa
+      if (event.target.classList.contains('fichaMisProyectos')) {
+        document.querySelector('.fichaMisProyectos').classList.add('active')
+        document.querySelector('.fichaProyectos').classList.remove('active')
+        misProyectos = true
+      } else {
+        // Si click en 'Todos los proyectos' cambiamos pestaña activa
+        document.querySelector('.fichaProyectos').classList.add('active')
+        document.querySelector('.fichaMisProyectos').classList.remove('active')
+        misProyectos = false
+      }
+      // Actualizamos los datos en el panel central
+      pintaTabla(datos)
+      pintaTarjetas(datos)
+    })
+
+    // ####################################################################
+    // BOTONES DE EDICIÓN, BORRADO y VISUALIZACIÓN DE DETALLE DE PROYECTOS
+    // ####################################################################
+
+    // Detectamos clic sobre main (Usamos delegación de eventos porque la tabla y tarjetas se actualizan constantemente en el DOM)
     document.querySelector('main').addEventListener('click', (event) => {
       let id = ''
-      // Si hemos pulsado sobre uno de los botones
+      // Si hemos pulsado sobre uno de los botones DE EDICIÓN O BORRADO
       if (event.target.classList.contains('botonAdmin')) {
         const boton = event.target
         // Capturamos el id de su dataset
@@ -368,17 +382,28 @@ export default {
           // *** AQUÍ VA LA FUNCIÓN QUE BORRA DE LA BASE DE DATOS EL PROYECTO CORRESPONDIENTE AL ID ***
         }
       }
-      // Si hacemos clic sobre cualquier zona de una celda
+      // Visualizar detalle del proyecto si click sobre tr de vista tabla
       if (event.target.tagName === 'TD') {
         console.log('clic en td')
         id = event.target.parentNode.dataset.id
         window.location = `#/proyectoDetalle/${id}`
       }
-      // Si hacemos clic sobre la imagen
+      // Si hacemos clic sobre la imagen de tabla o de vista tarjetas
       if (event.target.classList.contains('verDetalle')) {
         id = event.target.dataset.id
         window.location = `#/proyectoDetalle/${id}`
       }
     })
+
+    // ####################################################################
+    // Mostrar/ocultar botón 'subir proyecto'
+    // ####################################################################
+
+    // Capturamos los datos del usuario logueado
+    const usuario = ls.getUsuario()
+    // Ocultamos el botón de subir proyecto si el rol es registrado
+    if (usuario.rol === 'registrado') {
+      document.querySelector('#botonSubirProyecto').classList.add('disabled')
+    }
   }
 }

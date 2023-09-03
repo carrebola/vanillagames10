@@ -389,7 +389,7 @@ export default {
     // Borrar datos del input del buscador
     document.querySelector('#borrarBuscador').addEventListener('click', () => {
       // Borramos contenido del buscador
-      const inputBusqueda = document.getElementById('inputBusqueda').value = ''
+      document.getElementById('inputBusqueda').value = ''
       // Actualizamos array con todos los proyectos
       // const proyectosFiltrados = datos
       // Actualizamos los datos en el panel central
