@@ -1,76 +1,116 @@
-// Importamos la conexión a la base de datos desde './supabase.js'
+// Importa el objeto 'supabase' desde un archivo 'supabase.js'
 import { supabase } from './supabase.js'
 
-// Definición de la clase User
-export class User {
-  // Constructor que asigna propiedades básicas de un usuario
-  constructor (id = null, email = null, password = null) {
+// Definición de la clase Proyecto
+export class Proyecto {
+  // Constructor que inicializa las propiedades del proyecto
+  constructor({
+    id = null, // ID único del proyecto
+    created_at = null, // Fecha de publicación del proyecto
+    user_id = null, // ID del usuario que ha creado el proyecto
+    nombre = null, // Nombre del proyecto
+    descripcion = null, // Descripcion del proyecto
+    imagen = 'default_image.png', // imagen por defecto
+    enlace = null, // Enlace al proyecto publicado
+    repositorio = null, // Enlace al repositorio
+    estado = 'activo' // Estado del proyecto (activo/inactivo, por ejemplo)
+  }) {
+    // Asignación de valores a las propiedades del proyecto
     this.id = id
-    this.email = email
-    this.password = password
+    this.created_at = created_at
+    this.user_id = user_id
+    this.nombre = nombre
+    this.descripcion = descripcion
+    this.imagen = imagen
+    this.enlace = enlace
+    this.repositorio = repositorio
+    this.estado = estado
   }
 
-  // Método estático para crear un nuevo usuario (registro)
-  static async create (userData) {
-    // Registra un nuevo usuario con Supabase
-    const { data, error } = await supabase.auth.signUp(userData)
+  // Método estático para obtener todos los proyectos
+  static async getAll() {
+    // Realiza una consulta a la base de datos para obtener todos los proyectos
+    const { data: proyectos, error } = await supabase
+      .from('proyectos')
+      .select('*') // Selecciona todas las columnas
+      .order('created_at', { ascending: false }) // Ordena por fecha de creación descendente
+
+    // Manejo de errores: lanza una excepción si ocurre algún error
+    if (error) {
+      throw new Error(error.message)
+    }
+
+    // Mapea los proyectos obtenidos a instancias de la clase Proyecto y los devuelve
+    return proyectos.map((Proyecto) => new Proyecto(Proyecto))
+  }
+
+  // Método estático para obtener un Proyecto por su ID
+  static async getById(id) {
+    // Realiza una consulta para obtener un Proyecto por su ID
+    const { data: proyecto, error } = await supabase
+      .from('proyectos')
+      .select('*')
+      .eq('id', id) // Filtra por el ID especificado
+      .single() // Espera un solo resultado
 
     // Manejo de errores
     if (error) {
       throw new Error(error.message)
     }
-    
-    // Si el usuario se crea correctamente, devuelve una instancia de User con el ID y el email
-    console.log('usuario creado correctamente ', data)
-    return new User(data.user.id, data.user.email)
+
+    // Devuelve una instancia de Proyecto con la información obtenida
+    return new Proyecto(proyecto)
   }
 
-  // Método estático para iniciar sesión
-  static async login (userData) {
-    // Inicia sesión con Supabase
-    const { data, error } = await supabase.auth.signInWithPassword(userData)
+  // Método estático para obtener un Proyecto por el ID del usuario asociado
+  static async getByUserId(id) {
+    // Realiza una consulta para obtener un Proyecto por el ID de usuario asociado
+    const { data: proyecto, error } = await supabase
+      .from('proyectos')
+      .select('*')
+      .eq('user_id', id) // Filtra por el ID de usuario especificado
+      .single()
 
     // Manejo de errores
     if (error) {
       throw new Error(error.message)
     }
 
-    // Devuelve una instancia de User con el ID y el email del usuario logueado
-    return new User(data.user.id, data.user.email)
+    // Devuelve una instancia de Proyecto con la información obtenida
+    return new Proyecto(proyecto)
   }
 
-  // Método estático para cerrar sesión
-  static async logout () {
-    // Cierra sesión con Supabase
-    const { error } = await supabase.auth.signOut()
+  // Método estático para crear un nuevo Proyecto
+  static async create(proyectoData) {
+    // Inserta un nuevo Proyecto en la base de datos con los datos proporcionados
+    const { data, error } = await supabase
+      .from('proyectos')
+      .insert(proyectoData) // Inserta los datos del nuevo Proyecto
+      .select() // Devuelve los datos insertados
 
     // Manejo de errores
     if (error) {
-      throw new Error(error.message)
+      throw new Error(`Error creando Proyecto: ${error.message}`)
     }
 
-    // Retorna true si el cierre de sesión fue exitoso
+    // Si se insertaron datos, devuelve una nueva instancia de Proyecto con los datos insertados
+    return data ? new Proyecto(data[0]) : null
+  }
+
+  // Método estático para actualizar un Proyecto existente por su ID
+  static async update(id, newData) {
+    // Actualiza un Proyecto existente en la base de datos con los nuevos datos
+    const { error } = await supabase
+      .from('proyectos')
+      .update(newData) // Actualiza con los nuevos datos proporcionados
+      .eq('id', id) // Filtra por el ID del Proyecto a actualizar
+
+    // Manejo de errores
+    if (error) {
+      throw new Error(`Error actualizando Proyecto: ${error.message}`)
+    }
+
+    // Si la actualización fue exitosa, devuelve true
     return true
-  }
-
-  // Método estático para obtener el usuario actualmente logueado
-  static async getUser () {
-    // Obtiene la información del usuario actualmente logueado con Supabase
-    const { data: { user } } = await supabase.auth.getUser()
-
-    // Si hay un usuario logueado, devuelve una instancia de User con su ID y email
-    if (user) return new User(user.id, user.email)
-  }
-
-  // Método para actualizar datos del usuario (no está claro cómo se utiliza actualmente)
-  async update (nuevosDatos) {
-    const { data, error } = await supabase.auth.updateUser({
-      email: this.email,
-      password: this.password
-    })
-
-    if (error) {
-      throw new Error(error.message)
-    }
   }
 }

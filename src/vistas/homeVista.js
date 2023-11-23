@@ -1,6 +1,6 @@
 export default {
   template: // html
-  `
+    `
 <div class="container">
   <h1 class="mt-5 text-center fw-bold" style="font-size: 100px">
     Vanilla Games
@@ -10,7 +10,7 @@ export default {
   </div>
 </div>
   `,
-  script: () => {
+  script: async () => {
     console.log('Vista home cargada')
   }
 }
