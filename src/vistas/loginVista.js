@@ -14,8 +14,7 @@ export default {
     <form id="formularioLogin" novalidate action="" class="form border shadow-sm p-3">
       <!-- Email -->
       <label for="emailLogin" class="form-label">Email:</label>
-      <input id="emailLogin" name="email" value="carrebola_test_alumno1@gmail.com
-      " required type="email" class="form-control" />
+      <input id="emailLogin" name="email" value="carrebola@fpllefia.com" required type="email" class="form-control" />
       <div class="invalid-feedback">El formato del email no es correcto</div>
       <!-- Contraseña -->
       <label for="passLogin" class="form-label mt-3">Contraseña:</label>

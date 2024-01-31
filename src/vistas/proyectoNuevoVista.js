@@ -1,6 +1,9 @@
+import { Proyecto } from '../bd/proyecto'
+import { User } from '../bd/user'
+
 export default {
   template: // html
-  `
+    `
   <div class="container">
   <h1 class="mt-5">Nuevo proyecto</h1>
   <div class="d-flex justify-content-end">
@@ -108,15 +111,16 @@ export default {
 
     // Validación bootstrap
     // Capturamos el formulario en una variable
-    const formulario = document.querySelector('#formularioNuevoPRoyecto')
+    const formulario = document.querySelector('#formularioNuevoProyecto')
     // Detectamos su evento submit (enviar)
     formulario.addEventListener('submit', (event) => {
       // Detenemos el evento enviar (submit)
       event.preventDefault()
       event.stopPropagation()
+
       // Comprobamos si el formulario no valida
       if (!formulario.checkValidity()) {
-      // Y añadimos la clase 'was-validate' para que se muestren los mensajes
+        // Y añadimos la clase 'was-validate' para que se muestren los mensajes
         formulario.classList.add('was-validated')
       } else {
         enviaDatos()
@@ -124,18 +128,29 @@ export default {
     })
 
     // Función para enviar datos a la base de datos
-    function enviaDatos () {
-      const proyectoEditado = {
-        imagen: document.querySelector('#urlImagen').value,
-        nombre: document.querySelector('#nombreJuego').value,
-        descripcion: document.querySelector('#descripcion').value,
-        fecha: document.querySelector('#fecha').value,
-        estado: document.querySelector('#estado').value,
-        enlace: document.querySelector('#enlace').value,
-        repositorio: document.querySelector('#repositorio').value
+    async function enviaDatos() {
+      try {
+        const user = await User.getUser()
+        const userId = user.id
+
+        const proyectoEditado = {
+          // Asignación de valores a las propiedades del proyecto
+          imagen: document.querySelector('#urlImagen').value,
+          nombre: document.querySelector('#nombreJuego').value,
+          descripcion: document.querySelector('#descripcion').value,
+          created_at: document.querySelector('#fecha').value,
+          estado: document.querySelector('#estado').value,
+          enlace: document.querySelector('#enlace').value,
+          repositorio: document.querySelector('#repositorio').value,
+          user_id: userId
+        }
+        const proyectoCreado = await Proyecto.create(proyectoEditado)
+        alert('Proyecto creado con éxito', proyectoCreado.nombre)
+        console.log('Enviando a la base de datos ', proyectoCreado)
+        window.location = '#/proyectos'
+      } catch (error) {
+        alert('Error al crear el proyecto', error)
       }
-      alert('Enviando proyecto a la base de datos')
-      console.log('Enviando a la base de datos ', proyectoEditado)
     }
   }
 }

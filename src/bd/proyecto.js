@@ -39,9 +39,9 @@ export class Proyecto {
     if (error) {
       throw new Error(error.message)
     }
-
+    console.log('proyectos desde bd', proyectos);
     // Mapea los proyectos obtenidos a instancias de la clase Proyecto y los devuelve
-    return proyectos.map((Proyecto) => new Proyecto(Proyecto))
+    return proyectos.map((proyecto) => new Proyecto(proyecto))
   }
 
   // Método estático para obtener un Proyecto por su ID
